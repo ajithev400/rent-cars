@@ -29,4 +29,12 @@ class UserCreateSerializer(serializers.ModelSerializer):
             password = validated_data['password'], 
         )
         return user
-    
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Account
+        fields = (
+            'first_name',
+            'last_name',
+            'email',
+        )

@@ -1,9 +1,13 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
+// import axios from 'axios'
+// import axiosService from '../axios'
 
 import authService from './authService'
 
+// const authUser = axiosService.getUser();/
+
 const initialState = {
-    user : '',
+    user : {},
     isLoading : false,
     isError : false,
     isSuccess : false,
@@ -54,12 +58,27 @@ export const sendOtp = createAsyncThunk(
     }
 )
 
+export const checkAuth = createAsyncThunk(
+    'api/verify',
+    async(_,thunkApi)=>{
+        try{
+            return await authService.checkAuth()
+        }catch(err){
+            const message = (
+                err.response && err.response.data && err.response.data.message
+            ) || err.message || err.toString()
+            return thunkApi.rejectWithValue(message)
+        }
+    }
+)
+
+
 export const authSlice = createSlice({
     name : 'auth',
     initialState,
     reducers:{
         reset:{
-            user:'',
+            user:{},
             isLoading: false,
             isError: false,
             isVerifeyed: false,
@@ -98,6 +117,16 @@ export const authSlice = createSlice({
         .addCase(sendOtp.rejected,(state) =>{
             state.isLoading = false
         })
+        .addCase(checkAuth.pending, state => {
+            state.isLoading = true;
+          })
+          .addCase(checkAuth.fulfilled, (state,user) => {
+            state.isLoading = false;
+            state.isAuthenticated = true;
+          })
+          .addCase(checkAuth.rejected, state => {
+            state.isLoading = false;
+          })
     }
 })
 

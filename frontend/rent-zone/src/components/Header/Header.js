@@ -28,7 +28,7 @@ const navLinks = [
   },
 ];
 
-const Header = () => {
+const Header = ({user}) => {
   const {isAuthenticated } = useSelector(state => state.auth)
 
   const menuRef = useRef(null);
@@ -37,7 +37,7 @@ const Header = () => {
   return (
     <header className="header">
       <div className="header__top">
-      <Container>
+        <Container>
           <Row>
             <Col lg="6" md="6" sm="6">
               <div className="header__top__left">
@@ -48,28 +48,39 @@ const Header = () => {
               </div>
             </Col>
 
-      {isAuthenticated?(
-        <Col lg="6" md="6" sm="6">
-        <div className="header__top__right d-flex align-items-center justify-content-end gap-3">
-          <Link to="#" className=" d-flex align-items-center gap-1">
-          <i className="ri-login-box-line"></i> Logout
-          </Link>
-        </div>
-      </Col>
-      ):(
-        <Col lg="6" md="6" sm="6">
-              <div className="header__top__right d-flex align-items-center justify-content-end gap-3">
-                <Link to="/login" className=" d-flex align-items-center gap-1">
-                <i className="ri-login-box-line"></i> Login
-                </Link>
+            {isAuthenticated ? (
+              <Col lg="6" md="6" sm="6">
+                <div className="header__top__right d-flex align-items-center justify-content-end gap-3">
+                  <Link to="#" className=" d-flex align-items-center gap-1">
+                    <i className="ri-login-box-line"></i> Logout
+                  </Link>
+                  <Link
+                    to="#"
+                    className=" d-flex align-items-center gap-1"
+                  >
+                    <i className="ri-user-line"></i> {user?.email}
+                  </Link>
+                </div>
+              </Col>
+            ) : (
+              <Col lg="6" md="6" sm="6">
+                <div className="header__top__right d-flex align-items-center justify-content-end gap-3">
+                  <Link
+                    to="/login"
+                    className=" d-flex align-items-center gap-1"
+                  >
+                    <i className="ri-login-box-line"></i> Login
+                  </Link>
 
-                <Link to="/register" className=" d-flex align-items-center gap-1">
-                  <i className="ri-user-line"></i> Register
-                </Link>
-              </div>
-            </Col>
-      )}
-            
+                  <Link
+                    to="/register"
+                    className=" d-flex align-items-center gap-1"
+                  >
+                    <i className="ri-user-line"></i> Register
+                  </Link>
+                </div>
+              </Col>
+            )}
           </Row>
         </Container>
       </div>
@@ -81,7 +92,7 @@ const Header = () => {
               <div className="logo">
                 <h1>
                   <Link to="/home" className=" d-flex align-items-center gap-2">
-                  <i className="ri-car-line"></i>
+                    <i className="ri-car-line"></i>
                     <span>
                       Rent-Zone <br /> Cars
                     </span>
@@ -165,7 +176,7 @@ const Header = () => {
         </Container>
       </div>
     </header>
-  )
+  );
 }
 
 export default Header

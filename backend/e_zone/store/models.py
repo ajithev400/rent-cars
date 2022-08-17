@@ -16,7 +16,7 @@ class Vehicles(models.Model):
     model = models.CharField(max_length=150, blank=False, null= False)
     price = models.IntegerField(null=False,blank=False)
     # image = models.ImageField(upload_to="photos/cars", null=True, blank=True)
-    imgUrl = models.CharField(max_length=200,null=False,blank=False)
+    image = models.ImageField(upload_to='vehicles',null=True,blank=True)
     speed = models.CharField(max_length=50, blank=True, null=True)
     seat_type = models.CharField(choices=SEATTYPE,max_length=50,default='Regular')
     transmission = models.CharField(choices=TRANSMISSION,max_length=50, default='Manual Transmission')

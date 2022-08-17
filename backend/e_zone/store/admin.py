@@ -9,7 +9,7 @@ class VehicleAdmin(admin.ModelAdmin):
         'brand',
         'model',
         'price',
-        'imgUrl',
+        'image',
         'speed',
         'seat_type',
         'transmission',

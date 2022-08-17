@@ -11,7 +11,7 @@ class CarsSerializers(serializers.ModelSerializer):
             'brand',
             'model',
             'price',
-            'imgUrl',
+            'image',
             'speed',
             'seat_type',
             'transmission',

@@ -1,5 +1,7 @@
 import axios from 'axios'
 const API_URL = 'http://127.0.0.1:8000/'
+const token = JSON.parse(localStorage.getItem('jwtToken'))
+
 
 const registerUser = async (userData) =>{
     const res = await axios.post(API_URL + 'api/register/', userData)
@@ -9,7 +11,7 @@ const registerUser = async (userData) =>{
 const loginUser = async(userData) =>{
     const res = await axios.post(API_URL + 'api/token/', userData)
     if (res.data){
-        localStorage.setItem('user',JSON.stringify(res.data))
+        localStorage.setItem('jwtToken',JSON.stringify(res.data))
     }
     return res.data
 }
@@ -20,10 +22,18 @@ const verifyOtp = async(data)=>{
     return res.data
 }
 
+const checkAuth = async() =>{
+
+    const res = await axios.post(API_URL+'api/token/verify/',{token: token.access})
+    return res.data
+}
+
+
 const authService = {
     registerUser,
     loginUser,
     verifyOtp,
+    checkAuth
 }
 
 export default authService
