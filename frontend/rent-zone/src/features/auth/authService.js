@@ -28,12 +28,35 @@ const checkAuth = async() =>{
     return res.data
 }
 
+const getUser =async ()=> {
+    const token = JSON.parse(localStorage.getItem('jwtToken'))
+  if(token){
+    try{
+        const res= await axios.get(API_URL+'api/getuser/',{
+            headers:{
+                'Authorization': `Bearer ${token.access}`
+            }
+        })
+        if(res.data){
+            localStorage.setItem("user",res.data);
+        }
+        
+       return res.data;
+       }catch(err){
+        console.log(err);
+       }
+  }
+}
+
+
+
 
 const authService = {
     registerUser,
     loginUser,
     verifyOtp,
-    checkAuth
+    checkAuth,
+    getUser,
 }
 
 export default authService

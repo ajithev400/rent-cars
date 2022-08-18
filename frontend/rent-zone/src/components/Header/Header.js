@@ -28,8 +28,10 @@ const navLinks = [
   },
 ];
 
-const Header = ({user}) => {
-  const {isAuthenticated } = useSelector(state => state.auth)
+const Header = () => {
+
+
+  const {isAuthenticated,user } = useSelector(state => state.auth)
 
   const menuRef = useRef(null);
 

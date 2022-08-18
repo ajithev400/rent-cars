@@ -2,12 +2,13 @@ from rest_framework import serializers
 
 from .models import Vehicles
 
-class CarsSerializers(serializers.ModelSerializer):
+class CarsSerializers(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Vehicles
         fields = (
-            # 'id',
+            'id',
             'vehicle_name',
+            'slug',
             'brand',
             'model',
             'price',
@@ -18,3 +19,7 @@ class CarsSerializers(serializers.ModelSerializer):
             'description',
             'is_available'
         )
+        lookup_field = 'slug'
+        extra_kwargs = {
+            'url': {'lookup_field': 'slug'}
+        }

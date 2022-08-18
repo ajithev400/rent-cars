@@ -36,5 +36,6 @@ class UserSerializer(serializers.ModelSerializer):
         fields = (
             'first_name',
             'last_name',
+            'mobile',
             'email',
         )

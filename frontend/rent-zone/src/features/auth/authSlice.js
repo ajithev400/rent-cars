@@ -1,13 +1,10 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
-// import axios from 'axios'
-// import axiosService from '../axios'
-
 import authService from './authService'
 
-// const authUser = axiosService.getUser();/
+
 
 const initialState = {
-    user : {},
+    user :{},
     isLoading : false,
     isError : false,
     isSuccess : false,
@@ -72,6 +69,21 @@ export const checkAuth = createAsyncThunk(
     }
 )
 
+export const getUser = createAsyncThunk(
+    'api/getuser',
+    async(_,thunkApi)=>{
+        try{
+            return await authService.getUser()
+        }catch(err){
+            const message = (
+                err.response && err.response.data && err.response.data.message
+            ) || err.message || err.toString()
+            return thunkApi.rejectWithValue(message)
+        }
+    }
+)
+
+
 
 export const authSlice = createSlice({
     name : 'auth',
@@ -127,6 +139,17 @@ export const authSlice = createSlice({
           .addCase(checkAuth.rejected, state => {
             state.isLoading = false;
           })
+          .addCase(getUser.pending, state =>{
+            state.isLoading =true
+        })
+          .addCase(getUser.fulfilled, (state,actions) =>{
+            state.user = actions.payload
+            state.isLoading = false
+          })
+          .addCase(getUser.rejected, state =>{
+            state.isLoading = false
+          })
+          
     }
 })
 
