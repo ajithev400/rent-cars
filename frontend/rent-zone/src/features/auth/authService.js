@@ -23,7 +23,7 @@ const verifyOtp = async(data)=>{
 }
 
 const checkAuth = async() =>{
-
+    
     const res = await axios.post(API_URL+'api/token/verify/',{token: token.access})
     return res.data
 }

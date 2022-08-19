@@ -1,12 +1,12 @@
 import React from 'react'
 import { Col } from "reactstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import "../../styles/car-item.css";
 
 const CarItem = (props) => {
 
-    const { image, model, vehicle_name, transmission, speed, price } = props.item;
-
+    const { image, model, vehicle_name, slug, transmission, speed, price } = props.item;
+    const navigate = useNavigate()
   return (
     <Col lg="4" md="4" sm="6" className="mb-5">
       <div className="car__item">
@@ -32,12 +32,12 @@ const CarItem = (props) => {
             </span>
           </div>
 
-          <button className=" w-50 car__item-btn car__btn-rent">
-            <Link to={`/cars/${vehicle_name}`}>Rent</Link>
+          <button onClick={()=>navigate(`/cars/${slug}`)} className=" w-50 car__item-btn car__btn-rent">
+            <Link to={`/cars/${slug}`}>Rent</Link>
           </button>
 
-          <button className=" w-50 car__item-btn car__btn-details">
-            <Link to={`/cars/${vehicle_name}`}>Details</Link>
+          <button onClick={()=>navigate(`/cars/${slug}`)} className=" w-50 car__item-btn car__btn-details">
+            <Link to={`/cars/${slug}`}>Details</Link>
           </button>
         </div>
       </div>

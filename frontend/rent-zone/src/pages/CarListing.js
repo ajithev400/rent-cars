@@ -4,7 +4,7 @@ import Footer from '../components/Footer/Footer'
 import Header from '../components/Header/Header'
 import Helmet from '../components/Helmet/Helmet'
 import CarItem from "../components/UI/CarItem";
-import carData from "../assets/data/carData";
+// import carData from "../assets/data/carData";
 import axiosService from '../features/axios';
 
 const CarListing = () => {

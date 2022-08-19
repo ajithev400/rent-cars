@@ -15,7 +15,7 @@ class Vehicles(models.Model):
     brand = models.CharField(max_length=150, blank=False, null=False)
     model = models.CharField(max_length=150, blank=False, null= False)
     price = models.IntegerField(null=False,blank=False)
-    # image = models.ImageField(upload_to="photos/cars", null=True, blank=True)
+    owner = models.ForeignKey(Account, related_name='posts', on_delete= models.CASCADE, blank=True, null=True)
     image = models.ImageField(upload_to='vehicles',null=True,blank=True)
     speed = models.CharField(max_length=50, blank=True, null=True)
     seat_type = models.CharField(choices=SEATTYPE,max_length=50,default='Regular')
@@ -24,6 +24,9 @@ class Vehicles(models.Model):
     is_available = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-updated_at','-created_at'] 
 
     def __str__(self):
         return self.vehicle_name
@@ -39,6 +42,9 @@ class ReviewRating(models.Model):
     
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-updated_at','-created_at'] 
 
     def __str__(self):
         return self.subject

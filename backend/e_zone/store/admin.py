@@ -6,6 +6,7 @@ class VehicleAdmin(admin.ModelAdmin):
     list_display = (
         'vehicle_name',
         'slug',
+        'owner',
         'brand',
         'model',
         'price',
