@@ -11,6 +11,7 @@ class AccountAdmin(UserAdmin):
         "first_name",
         "last_name",
         "username",
+        'role',
         "gender",
         "date_joined",
         "last_login",

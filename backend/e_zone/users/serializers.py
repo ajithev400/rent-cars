@@ -38,4 +38,5 @@ class UserSerializer(serializers.ModelSerializer):
             'last_name',
             'mobile',
             'email',
+            'role'
         )

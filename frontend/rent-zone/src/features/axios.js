@@ -9,7 +9,7 @@ const getVehicles = () =>{ return axios.get(API_URL+'api/vehicle/')
 }
 
 const getSingleCar = (slug)=>{
-    return axios.get(API_URL+`api/vehicle/${slug}`)
+    return axios.get(API_URL+`api/vehicle/${slug}/`)
 }
 
 

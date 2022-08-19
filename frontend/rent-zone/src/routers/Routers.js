@@ -13,6 +13,9 @@ import LoginPage from '../pages/LoginPage'
 const Routers = () => {
   return (
     <Routes>
+        <Route path ='/register' element = {<RegisterPage/>} />
+        <Route path ='/login' element = {<LoginPage/>} />
+        
         <Route path = '/' element={<Navigate to='/home'/>}/>
         <Route path ='/home' element = {<HomePage/>} />
         <Route path ='/about' element = {<About/>} />
@@ -21,8 +24,6 @@ const Routers = () => {
         <Route path ='/blog' element = {<Blog/>} />
         <Route path ='/Blogs/:slug' element = {<BlogDetails/>} />
         <Route path ='*' element = {<NotFound/>} />
-        <Route path ='/register' element = {<RegisterPage/>} />
-        <Route path ='/login' element = {<LoginPage/>} />
     </Routes>
   )
 }

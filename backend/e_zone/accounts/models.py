@@ -14,6 +14,7 @@ class MyAccountManager(BaseUserManager):
             last_name=last_name,
         )
         user.is_varified = False
+        user.role = 'Customer'
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -26,6 +27,7 @@ class MyAccountManager(BaseUserManager):
             first_name=first_name,
             last_name=last_name,
         )
+        user.role = 'Admin'
         user.is_admin = True
         user.is_varified = True
         user.is_active = True
@@ -38,6 +40,11 @@ class MyAccountManager(BaseUserManager):
 
 
 class Account(AbstractBaseUser,PermissionsMixin):
+    ROLES =(
+        ("Customer","Customer"),
+        ("vender","vender"),
+        ("Admin","Admin"),
+    )
     email = models.EmailField(verbose_name="email", max_length=60, unique=True, blank=False)
     first_name = models.CharField(max_length=60, blank=False)
     last_name = models.CharField(max_length=60, blank=False)
@@ -46,6 +53,7 @@ class Account(AbstractBaseUser,PermissionsMixin):
     mobile = models.CharField(max_length=13, blank=False, unique=True)
     date_joined = models.DateTimeField(verbose_name="date joined", auto_now_add=True)
     last_login = models.DateTimeField(verbose_name="last login", auto_now_add=True)
+    role = models.CharField(choices=ROLES, max_length= 50, default="Customer")
     is_admin = models.BooleanField(default=False)
     is_varified = models.BooleanField(default=False)
     is_rejected = models.BooleanField(default=False)
