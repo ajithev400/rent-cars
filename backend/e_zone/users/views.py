@@ -12,18 +12,18 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 import jwt, datetime
 
-@api_view(['GET'])
-def getRoutes(request):
-    routes = [
-        'GET /api',
-        'GET /api/token',
-        'GET /api/token/vefify',
-        'POST /api/register',
-        'GET /api/getuser',
-        'POST /api/verify-otp',
-        'GET /api/vehicle'
-    ]
-    return Response(routes)
+# @api_view(['GET'])
+# def getRoutes(request):
+#     routes = [
+#         'GET /api',
+#         'GET /api/token',
+#         'GET /api/token/vefify',
+#         'POST /api/register',
+#         'GET /api/getuser',
+#         'POST /api/verify-otp',
+#         'GET /api/vehicle'
+#     ]
+#     return Response(routes)
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):

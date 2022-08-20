@@ -1,5 +1,7 @@
 from rest_framework import permissions
 
+from rest_framework import permissions
+
 class IsOwnerOrReadOnly(permissions.BasePermission):
     """
     Custom permissions to only owner of an object to edit it..
@@ -9,5 +11,6 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
 
+        
         # print("owner:",obj.owner == request.user)
-        return obj.owner == request.user
+        return obj.user == request.user
