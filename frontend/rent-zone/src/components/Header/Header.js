@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import { useSelector } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { Container, Row, Col } from 'reactstrap'
 import '../../styles/header.css'
 
@@ -30,10 +30,17 @@ const navLinks = [
 
 const Header = () => {
 
+  const navigate = useNavigate()
 
   const {isAuthenticated,user } = useSelector(state => state.auth)
 
   const menuRef = useRef(null);
+
+  const handleOnClick = ()=>{
+    // localStorage.removeItem('jwtToken')
+    localStorage.clear()
+    navigate("/login")
+  }
 
   const toggleMenu = () => menuRef.current.classList.toggle("menu__active");
   return (
@@ -53,9 +60,9 @@ const Header = () => {
             {isAuthenticated ? (
               <Col lg="6" md="6" sm="6">
                 <div className="header__top__right d-flex align-items-center justify-content-end gap-3">
-                  <Link to="#" className=" d-flex align-items-center gap-1">
+                  <span onClick={()=>{handleOnClick()}} style={{cursor:'pointer'}} className=" d-flex align-items-center gap-1">
                     <i className="ri-login-box-line"></i> Logout
-                  </Link>
+                  </span>
                   <Link
                     to="#"
                     className=" d-flex align-items-center gap-1"
@@ -67,10 +74,7 @@ const Header = () => {
             ) : (
               <Col lg="6" md="6" sm="6">
                 <div className="header__top__right d-flex align-items-center justify-content-end gap-3">
-                  <Link
-                    to="/login"
-                    className=" d-flex align-items-center gap-1"
-                  >
+                  <Link to="/login" style={{cursor:'pointer'}} className=" d-flex align-items-center gap-1">
                     <i className="ri-login-box-line"></i> Login
                   </Link>
 
