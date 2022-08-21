@@ -13,7 +13,6 @@ const getSingleCar = (slug)=>{
 }
 
 const createVendor = ( formData ) =>{
-    console.log('formData:', formData);
     axios.post(API_URL+'api/vendor/',formData,{
         headers:{
             'Content-Type':'application/json',

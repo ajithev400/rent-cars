@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'store.apps.StoreConfig',
     'vendor.apps.VendorConfig',
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 AUTH_USER_MODEL ='accounts.Account'

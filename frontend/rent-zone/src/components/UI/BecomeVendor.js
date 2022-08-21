@@ -23,7 +23,7 @@ const BecomeVendor = () => {
             </h2>
 
             <button onClick={()=>navigate("/register-vendor")} className="btn become__driver-btn mt-4">
-             <Link className='stretched-link' to={"/register-vendor"} > Become a Vendor </Link> 
+             <Link style={{ 'text-decoration': 'None' }} to={"/register-vendor"} > Become a Vendor </Link> 
             </button>
           </Col>
         </Row>

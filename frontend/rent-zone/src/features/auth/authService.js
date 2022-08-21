@@ -28,6 +28,11 @@ const checkAuth = async() =>{
     return res.data
 }
 
+const logOut = async()=>{
+    const res = await axios.post(API_URL+'api/logout/blacklist/',{refresh_token:token.refresh})
+    return res.data
+}
+
 const getUser =async ()=> {
     const token = JSON.parse(localStorage.getItem('jwtToken'))
   if(token){
@@ -57,6 +62,7 @@ const authService = {
     verifyOtp,
     checkAuth,
     getUser,
+    logOut,
 }
 
 export default authService

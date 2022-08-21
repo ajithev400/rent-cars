@@ -1,7 +1,8 @@
 import React, { useRef } from 'react'
-import { useSelector } from 'react-redux';
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, Navigate, NavLink} from 'react-router-dom'
 import { Container, Row, Col } from 'reactstrap'
+import { logout } from '../../features/auth/authSlice';
 import '../../styles/header.css'
 
 const navLinks = [
@@ -30,7 +31,7 @@ const navLinks = [
 
 const Header = () => {
 
-  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const {isAuthenticated,user } = useSelector(state => state.auth)
 
@@ -38,11 +39,15 @@ const Header = () => {
 
   const handleOnClick = ()=>{
     // localStorage.removeItem('jwtToken')
+
+    dispatch(logout())
     localStorage.clear()
-    navigate("/login")
+
   }
+  
 
   const toggleMenu = () => menuRef.current.classList.toggle("menu__active");
+  if(isAuthenticated !== true) return <Navigate to ='/login'/>
   return (
     <header className="header">
       <div className="header__top">

@@ -41,6 +41,21 @@ export const login = createAsyncThunk(
         }
     }
 )
+export const logout = createAsyncThunk(
+    'api/logout/blacklist',
+    async(_,thunkApi)=>{
+        try{
+            console.log("logout");
+            return await authService.logOut()
+
+        }catch(err){
+            const message = (
+                err.response && err.response.data && err.response.data.message
+            ) || err.message || err.toString()
+            return thunkApi.rejectWithValue(message)
+        }
+    }
+)
 
 export const sendOtp = createAsyncThunk(
     'api/verify-otp',
@@ -55,6 +70,7 @@ export const sendOtp = createAsyncThunk(
         }
     }
 )
+
 
 export const checkAuth = createAsyncThunk(
     'api/verify',
@@ -108,6 +124,16 @@ export const authSlice = createSlice({
             state.isAuthenticated = true
         })
         .addCase(login.rejected,(state)=>{
+            state.isLoading = false
+        })
+        .addCase(logout.pending, (state)=>{
+            state.isLoading = true
+        })
+        .addCase(logout.fulfilled,(state)=>{
+            state.isLoading = false
+            state.isAuthenticated = false
+        })
+        .addCase(logout.rejected,(state)=>{
             state.isLoading = false
         })
         .addCase(registerUser.pending,(state)=>{
