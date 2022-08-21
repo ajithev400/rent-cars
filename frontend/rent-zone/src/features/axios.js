@@ -1,6 +1,6 @@
 import axios from 'axios'
 const API_URL = 'http://127.0.0.1:8000/'
-
+const token = JSON.parse(localStorage.getItem('jwtToken'))
 
 const getVehicles = () =>{ return axios.get(API_URL+'api/vehicle/')
     .catch((res)=>{
@@ -12,10 +12,27 @@ const getSingleCar = (slug)=>{
     return axios.get(API_URL+`api/vehicle/${slug}/`)
 }
 
+const createVendor = ( formData ) =>{
+
+    axios.post(API_URL+'api/vendor/',formData,{
+        headers:{
+            'Content-Type':'application/json',
+            'Authorization':`Bearer ${token.access}`
+        }
+    })
+    .then((res)=>{
+        console.log(res);
+    })
+    .catch((res)=>{
+        console.log("Errr",res);
+    })
+}
+
 
 const axiosService = {
     getVehicles,
-    getSingleCar
+    getSingleCar,
+    createVendor
 }
 
 export default axiosService

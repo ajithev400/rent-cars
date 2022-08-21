@@ -65,8 +65,7 @@ const Header = () => {
                   </span>
                   <Link
                     to="#"
-                    className=" d-flex align-items-center gap-1"
-                  >
+                    className=" d-flex align-items-center gap-1">
                     <i className="ri-user-line"></i> {user?.email}
                   </Link>
                 </div>

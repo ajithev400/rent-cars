@@ -71,6 +71,13 @@ const OtpForm = ({mobile}) => {
                         <u>Skip</u>
                       </Link>
                     </p>
+
+                    {/* <p className='mt-3'>
+                      Regiser as Vendor{" "}
+                      <Link to="/login" className=" text-body">
+                        <u>Login</u>
+                      </Link>
+                    </p> */}
             </div>
          </div>
       </div>

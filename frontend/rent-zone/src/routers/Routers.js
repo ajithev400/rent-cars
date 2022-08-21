@@ -9,12 +9,14 @@ import CarDetails from '../pages/CarDetails'
 import NotFound from '../pages/NotFound'
 import RegisterPage from '../pages/RegisterPage'
 import LoginPage from '../pages/LoginPage'
+import VendorRegPage from '../pages/VendorRegPage'
 
 const Routers = () => {
   return (
     <Routes>
         <Route path ='/register' element = {<RegisterPage/>} />
         <Route path ='/login' element = {<LoginPage/>} />
+        <Route path ='/register-vendor' element = {<VendorRegPage/>} />
         
         <Route path = '/' element={<Navigate to='/home'/>}/>
         <Route path ='/home' element = {<HomePage/>} />

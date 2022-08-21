@@ -10,6 +10,7 @@ import { checkAuth,getUser } from '../features/auth/authSlice'
 import AboutSection from '../components/UI/AboutSection'
 import axiosService from '../features/axios'
 import CarItem from '../components/UI/CarItem'
+import BecomeVendor from '../components/UI/BecomeVendor'
 // import ServicesList from '../components/UI/ServicesList'
 
 const HomePage = () => {
@@ -70,6 +71,11 @@ const HomePage = () => {
             ))}
           </Row>
         </Container>
+      </section>
+
+      <section>
+        <BecomeVendor/>
+        
       </section>
 
     </Helmet>
