@@ -1,38 +1,40 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { Navigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Helmet from '../components/Helmet/Helmet'
 import axiosService from '../features/axios'
 
 const VendorRegPage = () => {
 
-    const {isLoading} = useSelector(state => state.auth)
+    const {isLoading} = useSelector(state=>state.auth)
+    const inputRef = useRef()
 
     const [formData, setFormData] = useState({
         vendor_name:'',
-        email:'',
         mobile:'',
         GST_number:'',
         image:null
       })
 
-    const { vendor_name, email, mobile, GST_number, image}= formData
+    const { vendor_name, mobile, GST_number}= formData
 
     const handleOnChange = (e) => {
         setFormData({...formData,[e.target.name]:e.target.value})
     }
-    // const handleImageChange = (e) =>{
-    //     image:e.target.files[0]
-    // }
+    const handleImageChange = (e) =>{
+        console.log(inputRef.current.files[0]);
+        setFormData({...formData,[e.target.name]:inputRef.current.files[0]})
+        // ref = {inputRef}
+        // image:e.target.files[0]
+    }
 
     const handleOnSubmit = (e) =>{
         e.preventDefault()
-        const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if (!vendor_name || !mobile || !email || !GST_number) {
+        // const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (!vendor_name || !mobile || !GST_number) {
         toast.error("Enter all fields");
-        } else if (!regex.test(email)) {
-        toast.error("Email is invalid");
-        } else if (!/^\d{10}$/.test(mobile)){
+        }  else if (!/^\d{10}$/.test(mobile)){
            toast.error("Invalid number must be ten digits")
         } else {
         axiosService.createVendor(formData)
@@ -52,7 +54,7 @@ const VendorRegPage = () => {
          <div className="col-md-6 col-sm-12">
             <div className="login-form">
                <form onSubmit={handleOnSubmit}>
-                  <div className="form-group">
+                  {/* <div className="form-group">
                      <label>Email</label>
                      <input 
                      type="email"
@@ -61,7 +63,7 @@ const VendorRegPage = () => {
                      value={email} 
                      className="form-control mt-2" 
                      placeholder="Email"/>
-                  </div>
+                  </div> */}
                   <div className="form-group mt-2">
                      <label>Vendor Name</label>
                      <input 
@@ -99,7 +101,8 @@ const VendorRegPage = () => {
                       name='image'
                       id='image'
                       accept='image/*'
-                      onChange={handleOnChange}
+                      ref={inputRef}
+                      onChange={handleImageChange}
                       className="form-control mt-2" 
                       placeholder="Mobile"/>
                   </div>

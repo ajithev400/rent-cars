@@ -13,4 +13,7 @@ class VendorViewSet(viewsets.ModelViewSet):
     search_fields = ['vendor_name','email','GST_number']
     
     def perform_create(self, serializer):
-        serializer.save(user = self.request.user, is_active = False, is_verified = False)
+        serializer.save(user = self.request.user, 
+        email = self.request.user.email,
+        is_active = False, 
+        is_verified = False)

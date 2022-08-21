@@ -5,7 +5,7 @@ class Vendor(models.Model):
     vendor_name = models.CharField(max_length=100)
     user = models.ForeignKey(Account, related_name='vendor', on_delete= models.CASCADE, blank=True, null=True)
     GST_number = models.CharField(max_length=100, unique=True, blank=True, null=True)
-    email = models.EmailField(max_length=150, unique=True)
+    email = models.EmailField(max_length=150, unique=True, null=True, blank=True)
     mobile = models.CharField(max_length=10, unique=True)
     image = models.ImageField(upload_to='vendors', blank=True, null= True)
 
