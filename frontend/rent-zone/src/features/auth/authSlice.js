@@ -10,7 +10,8 @@ const initialState = {
     isSuccess : false,
     isAuthenticated: false,
     registered : false,
-    isVerifeyed : false 
+    isVerifeyed : false, 
+    message:''
 }
 
 export const registerUser = createAsyncThunk(
@@ -33,10 +34,7 @@ export const login = createAsyncThunk(
         try{
             return await authService.loginUser(userData)
         }catch(err){
-            const message = (
-                err.response && err.response.data && err.response.data.message
-            ) || err.message || err.toString()
-            
+            const message = err.response.status
             return thunkApi.rejectWithValue(message)
         }
     }
@@ -112,7 +110,8 @@ export const authSlice = createSlice({
             isError: false,
             isVerifeyed: false,
             isAuthenticated: false,
-            registered : false
+            registered : false,
+            message:''
         }
     },
     extraReducers: builder =>{
@@ -123,11 +122,13 @@ export const authSlice = createSlice({
             state.isLoading = false
             state.isAuthenticated = true
         })
-        .addCase(login.rejected,(state)=>{
+        .addCase(login.rejected,(state, action)=>{
             state.isLoading = false
+            state.message = action.payload
         })
         .addCase(logout.pending, (state)=>{
             state.isLoading = true
+            state.isAuthenticated = false
         })
         .addCase(logout.fulfilled,(state)=>{
             state.isLoading = false
@@ -135,6 +136,7 @@ export const authSlice = createSlice({
         })
         .addCase(logout.rejected,(state)=>{
             state.isLoading = false
+            state.isAuthenticated = false
         })
         .addCase(registerUser.pending,(state)=>{
             state.isLoading = true

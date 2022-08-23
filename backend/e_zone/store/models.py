@@ -33,7 +33,7 @@ class Vehicles(models.Model):
 
 
 class ReviewRating(models.Model):
-    varient = models.ForeignKey(Vehicles, on_delete=models.CASCADE)
+    vehicle = models.ForeignKey(Vehicles, on_delete=models.CASCADE)
     user = models.ForeignKey(Account,on_delete=models.CASCADE)
     subject = models.CharField(max_length=100, blank=True)
     review = models.TextField(max_length=500, blank=True)

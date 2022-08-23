@@ -1,5 +1,5 @@
 import '../styles/LoginPageStyle.css'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import {toast} from 'react-toastify'
@@ -10,7 +10,7 @@ import Helmet from '../components/Helmet/Helmet'
 const LoginPage = () => {
    const dispatch = useDispatch()
 
-    const {isAuthenticated} = useSelector(
+    const {isAuthenticated,message} = useSelector(
         state => state.auth
     )
 
@@ -24,7 +24,13 @@ const LoginPage = () => {
     const handleOnChange = (e) => {
         setFormData({...formData,[e.target.name]:e.target.value})
     }
-
+   
+    useEffect(() => {
+      if(message){
+         toast.error("Username or password is incorect")
+      }
+    }, [message])
+    
     const handleOnSubmit = (e) =>{
         e.preventDefault()
         const regex =  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -36,6 +42,7 @@ const LoginPage = () => {
         dispatch(login(formData));
         }
     }
+    
     if (isAuthenticated) return <Navigate to='/' />;
   return (
     <Helmet title = 'Login'>

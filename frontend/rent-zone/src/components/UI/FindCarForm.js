@@ -10,9 +10,9 @@ const FindCarForm = () => {
           <input type="text" placeholder="From address" required />
         </FormGroup>
 
-        <FormGroup className="form__group">
+        {/* <FormGroup className="form__group">
           <input type="text" placeholder="To address" required />
-        </FormGroup>
+        </FormGroup> */}
 
         <FormGroup className="form__group">
           <input type="date" placeholder="Journey date" required />
@@ -30,6 +30,12 @@ const FindCarForm = () => {
           <select>
             <option value="ac">AC Car</option>
             <option value="non-ac">Non AC Car</option>
+          </select>
+        </FormGroup>
+        <FormGroup className="select__group">
+          <select>
+            <option value="ac">Manual Transmission</option>
+            <option value="non-ac">Automatic</option>
           </select>
         </FormGroup>
 

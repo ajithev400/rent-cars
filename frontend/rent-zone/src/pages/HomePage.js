@@ -28,7 +28,7 @@ const HomePage = () => {
   
   useEffect(()=>{
     dispatch(checkAuth())
-    dispatch(getUser())
+    // dispatch(getUser())
   },[dispatch])
   
   

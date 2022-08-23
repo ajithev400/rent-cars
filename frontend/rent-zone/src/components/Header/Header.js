@@ -1,13 +1,13 @@
 import React, { useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Navigate, NavLink} from 'react-router-dom'
+import { Link, NavLink} from 'react-router-dom'
 import { Container, Row, Col } from 'reactstrap'
 import { logout } from '../../features/auth/authSlice';
 import '../../styles/header.css'
 
 const navLinks = [
   {
-    path: "/home",
+    path: "/",
     display: "Home",
   },
   {
@@ -43,7 +43,6 @@ const Header = () => {
   
 
   const toggleMenu = () => menuRef.current.classList.toggle("menu__active");
-  if(isAuthenticated !== true) return <Navigate to ='/login'/>
   return (
     <header className="header">
       <div className="header__top">
@@ -97,7 +96,7 @@ const Header = () => {
             <Col lg="4" md="3" sm="4">
               <div className="logo">
                 <h1>
-                  <Link to="/home" className=" d-flex align-items-center gap-2">
+                  <Link to="/" className=" d-flex align-items-center gap-2">
                     <i className="ri-car-line"></i>
                     <span>
                       Rent-Zone <br /> Cars

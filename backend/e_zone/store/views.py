@@ -9,7 +9,7 @@ class VehicleViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly]
     lookup_field = 'slug'
     filter_backends = (filters.SearchFilter,)
-    search_fields = ['vehicle_name', 'brand', 'description']
+    search_fields = ['vehicle_name', 'brand', 'description','transmission']
     max_paginate_by = 20
 
     def perform_create(self, serializer):
