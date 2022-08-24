@@ -42,7 +42,7 @@ class MyAccountManager(BaseUserManager):
 class Account(AbstractBaseUser,PermissionsMixin):
     ROLES =(
         ("Customer","Customer"),
-        ("vender","vender"),
+        ("Vender","Vender"),
         ("Admin","Admin"),
     )
     email = models.EmailField(verbose_name="email", max_length=60, unique=True, blank=False)

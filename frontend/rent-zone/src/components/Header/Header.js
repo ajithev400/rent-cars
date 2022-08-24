@@ -4,6 +4,7 @@ import { Link, NavLink, useNavigate} from 'react-router-dom'
 import { Container, Row, Col } from 'reactstrap'
 import { logout } from '../../features/auth/authSlice';
 import '../../styles/header.css'
+import PrivateLink from '../Links/PrivateLink';
 
 const navLinks = [
   {
@@ -70,6 +71,9 @@ const Header = () => {
                     className=" d-flex align-items-center gap-1">
                     <i className="ri-user-line"></i> {user?.email}
                   </Link>
+                  <PrivateLink to='/admin' className=" d-flex align-items-center gap-1">
+                  <i className="ri-admin-fill"></i> Admin Panal
+                  </PrivateLink> 
                 </div>
               </Col>
             ) : (

@@ -38,10 +38,10 @@ export const isRouteRoleMatchs = (role)=>{
     const userRole = getRole()
    
     // const filtered =  role.filter((item)=>userRole.includes(item))
-    
+    // console.log(filtered);
     // return filtered.length ? true:false
-    console.log("Role1:",role);
-    console.log("role2:",userRole);
+    // console.log("Role1:",role);
+    // console.log("role2:",userRole);
     if(role===userRole){
         return true
     }else{
