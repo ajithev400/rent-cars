@@ -6,7 +6,7 @@ import FindCarForm from '../components/UI/FindCarForm'
 import Header from '../components/Header/Header'
 import Footer from '../components/Footer/Footer'
 import { useDispatch} from 'react-redux'
-import { checkAuth,getUser } from '../features/auth/authSlice'
+import { checkAuth } from '../features/auth/authSlice'
 import AboutSection from '../components/UI/AboutSection'
 import axiosService from '../features/axios'
 import CarItem from '../components/UI/CarItem'
@@ -28,7 +28,6 @@ const HomePage = () => {
   
   useEffect(()=>{
     dispatch(checkAuth())
-    // dispatch(getUser())
   },[dispatch])
   
   

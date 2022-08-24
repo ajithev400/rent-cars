@@ -1,26 +1,29 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Navigate, Outlet } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { checkAuth, getUser } from '../../features/auth/authSlice'
+import { isLoggedIn, isPathAllowed } from '../../utils/commonService'
 
 const Base = () => {
 
   const dispatch = useDispatch()
 
-  const {user,isAuthenticated} = useSelector(state => state.auth)
+  const {pathname} = useLocation()
+
+  const isAllowed = isPathAllowed(pathname)
+
 
     useEffect(() => {
       dispatch(checkAuth()) 
       dispatch(getUser())
-    }, [dispatch])
-    console.log("Auth:",user,isAuthenticated);
-
-  if(isAuthenticated){
+    }, [dispatch])  
+  
+  if(isLoggedIn() && isAllowed){
     return (
       <Outlet/>
     )
   }else{
-    return <Navigate to={'/login'}/>
+    return <Navigate to={'/'}/>
   }
 
 }

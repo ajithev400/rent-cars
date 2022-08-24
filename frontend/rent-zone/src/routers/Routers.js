@@ -10,6 +10,8 @@ import RegisterPage from '../pages/RegisterPage'
 import LoginPage from '../pages/LoginPage'
 import VendorRegPage from '../pages/VendorRegPage'
 import Base from '../components/Layout.js/Base'
+import VendorPage from '../pages/VendorPage'
+import AdminPage from '../pages/AdminPage'
 
 const Routers = () => {
   return (
@@ -23,7 +25,9 @@ const Routers = () => {
           <Route path ='/cars/:slug' element = {<CarDetails/>} />
           <Route path ='/blogs' element = {<Blog/>} />
           <Route path ='/Blogs/:slug' element = {<BlogDetails/>} />
-          <Route path ='register-vendor' element = {<VendorRegPage/>} />   
+          <Route path ='/register-vendor' element = {<VendorRegPage/>} />   
+          <Route path ='/vendor' element = {<VendorPage/>} />   
+          <Route path ='/admin' element = {<AdminPage/>} />   
         </Route>
         <Route path ='*' element = {<NotFound/>} />
 

@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, NavLink} from 'react-router-dom'
+import { Link, NavLink, useNavigate} from 'react-router-dom'
 import { Container, Row, Col } from 'reactstrap'
 import { logout } from '../../features/auth/authSlice';
 import '../../styles/header.css'
@@ -29,6 +29,8 @@ const Header = () => {
 
   const dispatch = useDispatch()
 
+  const navigate = useNavigate()
+
   const {isAuthenticated,user } = useSelector(state => state.auth)
 
   const menuRef = useRef(null);
@@ -38,7 +40,7 @@ const Header = () => {
 
     dispatch(logout())
     localStorage.clear()
-
+    navigate('/login')
   }
   
 

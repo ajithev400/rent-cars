@@ -1,0 +1,8 @@
+{
+    "/admin":{
+        "role":"Admin"
+    },
+    "/vendor":{
+        "role":"Vendor"
+    }
+}
