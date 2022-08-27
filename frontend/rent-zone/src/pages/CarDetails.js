@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Col, Container, Row } from 'reactstrap'
-import Footer from '../components/Footer/Footer'
-import Header from '../components/Header/Header'
 import Helmet from '../components/Helmet/Helmet'
 import BookingForm from '../components/UI/BookingForm'
 import PaymentMethod from '../components/UI/PaymentMethod'
@@ -23,7 +21,6 @@ const CarDetails = () => {
 
   return (
     <>
-    <Header/>
     <Helmet title={singleCarItem.vehicle_name}>
       <section>
         <Container>
@@ -131,7 +128,6 @@ const CarDetails = () => {
         </Container>
       </section>
     </Helmet>
-    <Footer/>
     </>
   )
 }

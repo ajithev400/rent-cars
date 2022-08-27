@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Container, Row, Col } from "reactstrap";
-import Footer from '../components/Footer/Footer'
-import Header from '../components/Header/Header'
 import Helmet from '../components/Helmet/Helmet'
 import CarItem from "../components/UI/CarItem";
 // import carData from "../assets/data/carData";
@@ -9,18 +7,34 @@ import axiosService from '../features/axios';
 
 const CarListing = () => {
   const [carsData, setCarsData] = useState([])
-  
+  // const [searchData, setSearchData] = useState('')
+
+  const [searchData,setSearchData] = useState('')
+  const [sort,setSort] = useState("");
+
   useEffect(() => {
-    axiosService.getVehicles()
+    axiosService.getVehicles(searchData)
     .then((res)=>{
       setCarsData(res.data)
     })
     // console.log('res:',axiosService.getVehicles());
-  }, [])
+  }, [searchData])
 
+  
+  useEffect(() => {
+    let newData =[...carsData];
+    if(sort === "low"){
+      newData = newData.sort((a,b) => a.price - b.price);
+    }else if(sort === "high"){
+      newData = newData.sort((a,b) => b.price - a.price);    
+    }
+    setCarsData(newData)
+  },[sort])
+    
+  
   return (
     <>
-    <Header/>
+    {/* <Header/> */}
     <Helmet title = 'Cars'>
     <section>
         <Container>
@@ -31,11 +45,13 @@ const CarListing = () => {
                   <i className="ri-sort-asc"></i> Sort By
                 </span>
 
-                <select>
-                  <option>Select</option>
-                  <option value="low">Low to High</option>
-                  <option value="high">High to Low</option>
+                <select onChange={(e)=>setSort(e.target.value)}>
+                  <option value={null}>Select</option>
+                  <option  value="low">Low to High</option>
+                  <option  value="high">High to Low</option>
                 </select>
+
+                <input type="text" value={searchData} onChange={(e)=>setSearchData(e.target.value)} />
               </div>
             </Col>
 
@@ -47,7 +63,6 @@ const CarListing = () => {
       </section>
 
     </Helmet>
-    <Footer/>
     </>
   )
 }

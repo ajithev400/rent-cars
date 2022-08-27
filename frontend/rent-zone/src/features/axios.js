@@ -2,7 +2,7 @@ import axios from 'axios'
 const API_URL = 'http://127.0.0.1:8000/'
 const token = JSON.parse(localStorage.getItem('jwtToken'))
 
-const getVehicles = () =>{ return axios.get(API_URL+'api/vehicle/')
+const getVehicles = (data) =>{ return axios.get(API_URL+`api/vehicle/?search=${data}`)
     .catch((res)=>{
         console.log(res);
     })

@@ -1,4 +1,3 @@
-import imp
 from pathlib import Path
 from datetime import timedelta
 from decouple import config
@@ -31,12 +30,13 @@ INSTALLED_APPS = [
 
     'rest_framework',
     "corsheaders",
+    'rest_framework_simplejwt.token_blacklist',
+    
     'api.apps.ApiConfig',
     'accounts.apps.AccountsConfig',
     'users.apps.UsersConfig',
     'store.apps.StoreConfig',
     'vendor.apps.VendorConfig',
-    'rest_framework_simplejwt.token_blacklist',
 ]
 
 AUTH_USER_MODEL ='accounts.Account'

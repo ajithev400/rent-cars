@@ -7,6 +7,7 @@ from vendor.views import VendorViewSet
 from rest_framework_simplejwt.views import (
     TokenRefreshView,TokenVerifyView
 )
+
 urlpatterns = [
     # path('',getRoutes, name='routes'),
     path('token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),

@@ -3,8 +3,6 @@ import {Container, Row, Col} from 'reactstrap'
 import Helmet from '../components/Helmet/Helmet'
 import HeroSlider from '../components/UI/HeroSlider'
 import FindCarForm from '../components/UI/FindCarForm'
-import Header from '../components/Header/Header'
-import Footer from '../components/Footer/Footer'
 import { useDispatch} from 'react-redux'
 import { checkAuth } from '../features/auth/authSlice'
 import AboutSection from '../components/UI/AboutSection'
@@ -17,13 +15,14 @@ const HomePage = () => {
   const dispatch = useDispatch()
 
   const [carData, setCarData] = useState([])
+  const data = ''
 
   useEffect(() => {
-    axiosService.getVehicles()
+    axiosService.getVehicles(data)
     .then((res)=>{
       setCarData(res.data)
     })
-  }, [])
+  },[])
   
   
   useEffect(()=>{
@@ -33,7 +32,7 @@ const HomePage = () => {
   
   return (
     <>
-    <Header  />
+
     <Helmet title = 'Home'>
       <section className='p-0 hero__slider-section'>
         <HeroSlider/>
@@ -78,7 +77,7 @@ const HomePage = () => {
       </section>
 
     </Helmet>
-    <Footer/>
+
     </>
   )
 }

@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux'
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { checkAuth, getUser } from '../../features/auth/authSlice'
 import { isLoggedIn, isPathAllowed } from '../../utils/commonService'
+import Footer from '../Footer/Footer'
+import Header from '../Header/Header'
 
 const Base = () => {
 
@@ -20,7 +22,11 @@ const Base = () => {
   
   if(isLoggedIn() && isAllowed){
     return (
+      <>
+      {pathname !== '/admin'  ? <Header/>:null}
       <Outlet/>
+      {pathname !== '/admin'  ? <Footer/>:null}
+      </>
     )
   }else{
     return <Navigate to={'/'}/>
