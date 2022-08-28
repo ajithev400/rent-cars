@@ -1,7 +1,7 @@
 from django.urls import path
 from rest_framework.routers import DefaultRouter
 from .views import BlacklistTokenUpdateView
-from users.views import MyTokenObtainPairView,RegisterView,Verify_otpView,RetriveUserView,getRoutes
+from users.views import MyTokenObtainPairView,RegisterView,Verify_otpView,RetriveUserView,ProfileViewSet
 from store.views import VehicleViewSet
 from vendor.views import VendorViewSet
 from rest_framework_simplejwt.views import (
@@ -21,6 +21,7 @@ urlpatterns = [
 ]
 router = DefaultRouter()
 
+router.register(r'profile', ProfileViewSet, basename='profile' )
 router.register(r'vehicle',VehicleViewSet,basename='vechicle')
 router.register(r'vendor',VendorViewSet,basename='vendor')
 urlpatterns=urlpatterns+router.urls

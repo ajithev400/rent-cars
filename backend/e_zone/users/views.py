@@ -1,10 +1,10 @@
-from datetime import datetime
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import permissions,status
-from django.contrib.auth import authenticate
-from .serializers import UserCreateSerializer, UserSerializer
+from rest_framework import permissions,status,pagination
+from rest_framework import viewsets
+from .models import Profile
+from .serializers import UserCreateSerializer, UserSerializer, ProfileSerializer
 from accounts.models import Account
 from accounts.otp import send_otp,verify_otp
 
@@ -54,10 +54,9 @@ class RegisterView(APIView):
         
         user = serializer.create(serializer.validated_data)
         user = UserCreateSerializer(user)
-        
         mobile_number = data.get('mobile')
         send_otp(mobile_number)
-
+        
         return Response(
             {'Success':'User created successfully'},
             status=status.HTTP_201_CREATED
@@ -83,3 +82,8 @@ class Verify_otpView(APIView):
                 {'Error':'Invalid OTP'},
                 status= status.HTTP_400_BAD_REQUEST
             )
+
+class ProfileViewSet(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+    permission_class = [permissions.IsAuthenticated]
