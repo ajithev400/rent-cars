@@ -281,7 +281,7 @@ const OverallStatus = () => {
 
 									<div className="input-group mb-3">
 										<label className="input-group-text">Amount</label>
-										<select className="form-select" style={{"max-width": "88px"}}>
+										<select className="form-select" style={{"maxWidth": "88px"}}>
 											<option value="BTC" selected="">BTC</option>
 											<option value="ETH">ETH</option>
 											<option value="LTC">LTC</option>
