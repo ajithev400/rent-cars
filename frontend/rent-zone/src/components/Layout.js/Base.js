@@ -29,7 +29,7 @@ const Base = () => {
       </>
     )
   }else{
-    return <Navigate to={'/'}/>
+    return <Navigate to={'/login'}/>
   }
 
 }

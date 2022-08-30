@@ -32,7 +32,7 @@ const OtpForm = ({mobile}) => {
             console.log(formData);
         }
     }
-    if (isVerifeyed) return <Navigate to= "/"/>
+    if (isVerifeyed) return <Navigate to= "/login"/>
   return (
     <Helmet title = 'Login'>
       <div className="sidenav">

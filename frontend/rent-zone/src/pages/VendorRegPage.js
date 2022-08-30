@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Navigate } from 'react-router-dom'
+// import { Navigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Helmet from '../components/Helmet/Helmet'
 import axiosService from '../features/axios'
@@ -44,12 +44,12 @@ const VendorRegPage = () => {
 
   return (
     <Helmet title = 'Register As Vendor' >
-    <div className="sidenav">
+    {/* <div className="sidenav">
          <div className="login-main-text">
             <h2>Rent-Zone Vendor<br/>Register Page</h2>
-            {/* <p>Login or register from here to access.</p> */}
+            <p>Login or register from here to access.</p>
          </div>
-      </div>
+      </div> */}
       <div className="main">
          <div className="col-md-6 col-sm-12">
             <div className="login-form">

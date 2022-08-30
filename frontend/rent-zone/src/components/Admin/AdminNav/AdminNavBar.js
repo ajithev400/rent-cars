@@ -1,5 +1,5 @@
 import React from 'react'
-import "../../styles/Admin/AdminStyle.css"
+import "../../../styles/Admin/AdminStyle.css"
 
 const AdminNavBar = () => {
   return (
