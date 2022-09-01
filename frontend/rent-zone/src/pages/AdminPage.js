@@ -1,10 +1,21 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+import { Outlet, useNavigate } from 'react-router-dom'
 import AdminNavBar from '../components/Admin/AdminNav/AdminNavBar'
-import OverallStatus from '../components/Admin/OverallStatus/OverallStatus'
+import { logout } from '../features/auth/authSlice'
 
 
 
 const AdminPage = () => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const handleOnClick = ()=>{
+    // localStorage.removeItem('jwtToken')
+
+    dispatch(logout())
+    localStorage.clear()
+    navigate('/login')
+  }
   return (
     <>
     <div className="container-fluid">
@@ -13,7 +24,9 @@ const AdminPage = () => {
           <AdminNavBar/>
           </div>
         <div className="col-md-10  col-sm-8 main-content">
-        <main className="content"  >
+
+      {/* AdminPageBody */}
+      <main className="content"  >
 				<div className="container-fluid">
 
 					<div className="row mb-2 mb-xl-3 mt-2">
@@ -22,15 +35,17 @@ const AdminPage = () => {
 						</div>
 
 						<div className="col-auto ms-auto text-end mt-n1">
-							<a href="#" className="btn btn-light bg-white me-2">Invite a Friend</a>
-							<a href="#" className="btn btn-primary">New Project</a>
+							<button onClick={handleOnClick} className="btn btn-light bg-white me-2">Logout</button>
+							<a href="{#}" className="btn btn-primary">New Project</a>
 						</div>
 					</div>
-          <OverallStatus/>
+          <Outlet/>
           
         </div>
         
       </main>
+      
+        
         </div>
         </div>
       </div>

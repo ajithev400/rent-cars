@@ -12,6 +12,10 @@ import VendorRegPage from '../pages/VendorRegPage'
 import Base from '../components/Layout.js/Base'
 import VendorPage from '../pages/VendorPage'
 import AdminPage from '../pages/AdminPage'
+import VehicleList from '../pages/VehicleList'
+import OverallStatus from '../components/Admin/OverallStatus/OverallStatus'
+import VendorApplicationList from '../components/Admin/VendorAppllicationList/VendorApplicationList'
+import VendorDetails from '../pages/VendorDetails/VendorDetails'
 
 const Routers = () => {
   return (
@@ -21,13 +25,18 @@ const Routers = () => {
         <Route path='/' element={<Base/>}>
 
           <Route index element = {<HomePage/>} />
-          <Route path ='/cars' element = {<CarListing/>} />
-          <Route path ='/cars/:slug' element = {<CarDetails/>} />
-          <Route path ='/blogs' element = {<Blog/>} />
-          <Route path ='/Blogs/:slug' element = {<BlogDetails/>} />
-          <Route path ='/register-vendor' element = {<VendorRegPage/>} />   
-          <Route path ='/vendor' element = {<VendorPage/>} />   
-          <Route path ='/admin' element = {<AdminPage/>} />   
+          <Route path ='cars' element = {<CarListing/>} />
+          <Route path ='cars/:slug' element = {<CarDetails/>} />
+          <Route path ='blogs' element = {<Blog/>} />
+          <Route path ='Blogs/:slug' element = {<BlogDetails/>} />
+          <Route path ='register-vendor' element = {<VendorRegPage/>} />   
+          <Route path ='vendor' element = {<VendorPage/>} />   
+          <Route path ='admin' element = {<AdminPage/>}>
+            <Route index element= {<OverallStatus/>} />
+            <Route path ='vehicles' element= {<VehicleList/>} />
+            <Route path ='new-applications' element= {<VendorApplicationList/>} />
+            <Route path ='new-applications/:slug' element= {<VendorDetails/>} />
+          </Route>   
         </Route>
         <Route path ='*' element = {<NotFound/>} />
 

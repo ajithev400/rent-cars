@@ -19,3 +19,6 @@ class Vendor(models.Model):
 
     def has_perm(self,perm,obj=None):
         return self.is_active
+    
+    class Meta:
+        ordering = ['-updated_at','-created_at'] 

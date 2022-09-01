@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import "../../../styles/Admin/AdminStyle.css"
 
 const AdminNavBar = () => {
@@ -12,8 +13,8 @@ const AdminNavBar = () => {
                 <div className="left-navigation ">
                     <ul className="list">
                         <h5><strong>Dashboard</strong></h5>
-                        <li>Home</li>
-                        <li>Vehicles</li>
+                        <li><Link to={'/admin'}>Home</Link></li>
+                        <li><Link to={'vehicles'}>Vehicles</Link></li>
                         <li>Users</li>
                         <li>Vendors</li>
                         <li>Vehicle Status</li>
@@ -24,7 +25,7 @@ const AdminNavBar = () => {
 
                     <ul className="list">
                         <h5><strong>Status</strong></h5>
-                        <li>New Vendor Applications</li>
+                        <li><Link to={'new-applications'}>New Vendor Applications</Link></li>
                         {/* <li>Rafting</li>
                         <li>Badminton</li>
                         <li>Tennis</li>

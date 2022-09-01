@@ -9,6 +9,7 @@ class CarsSerializers(serializers.HyperlinkedModelSerializer):
             'id',
             'vehicle_name',
             'slug',
+            # 'owner',
             'brand',
             'model',
             'price',
@@ -17,7 +18,7 @@ class CarsSerializers(serializers.HyperlinkedModelSerializer):
             'seat_type',
             'transmission',
             'description',
-            'is_available'
+            'is_available',
         )
         lookup_field = 'slug'
         extra_kwargs = {

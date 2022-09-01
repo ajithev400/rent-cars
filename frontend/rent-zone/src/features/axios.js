@@ -28,11 +28,22 @@ const createVendor = ( formData ) =>{
     })
 }
 
+const getVendorApplication = (data)=>{
+    return axios.get(API_URL+`api/vendor/?search=${data}`,{
+        headers:{
+            'Authorization':`Bearer ${token.access}`
+        }
+    })
+    .catch((res)=>{
+        console.log(res);
+    })
+}
 
 const axiosService = {
     getVehicles,
     getSingleCar,
-    createVendor
+    createVendor,
+    getVendorApplication
 }
 
 export default axiosService

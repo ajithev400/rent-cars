@@ -42,6 +42,10 @@
     font-weight: bolder;
     padding-left: 35px;
 }
+.list a{
+ text-decoration: none;
+ color: white;
+}
 .main-content{
 text-align:center;
 }

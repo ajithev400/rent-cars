@@ -23,9 +23,9 @@ const Base = () => {
   if(isLoggedIn() && isAllowed){
     return (
       <>
-      {pathname !== '/admin'  ? <Header/>:null}
+      {!isAllowed ? <Header/>:null}
       <Outlet/>
-      {pathname !== '/admin'  ? <Footer/>:null}
+      {!isAllowed  ? <Footer/>:null}
       </>
     )
   }else{

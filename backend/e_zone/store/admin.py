@@ -14,7 +14,6 @@ class VehicleAdmin(admin.ModelAdmin):
         'speed',
         'seat_type',
         'transmission',
-        'description',
         'is_available',
         'created_at',
         'updated_at'
