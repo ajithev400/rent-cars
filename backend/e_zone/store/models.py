@@ -1,5 +1,6 @@
 from django.db import models
 from accounts.models import Account
+from vendor.models import Vendor
 
 class Vehicles(models.Model):
     SEATTYPE =(
@@ -11,11 +12,12 @@ class Vehicles(models.Model):
         ("Automatic","Automatic")
     )
     vehicle_name = models.CharField(max_length=150, blank=False, null = False)
+    reg_number = models.CharField(max_length=20,blank=True,null=True)
     slug = models.SlugField(max_length=100,unique=True)  
     brand = models.CharField(max_length=150, blank=False, null=False)
     model = models.CharField(max_length=150, blank=False, null= False)
     price = models.IntegerField(null=False,blank=False)
-    owner = models.ForeignKey(Account, related_name='posts', on_delete= models.CASCADE, blank=True, null=True)
+    owner = models.ForeignKey(Vendor, related_name='posts', on_delete= models.CASCADE, blank=True, null=True)
     image = models.ImageField(upload_to='vehicles',null=True,blank=True)
     speed = models.CharField(max_length=50, blank=True, null=True)
     seat_type = models.CharField(choices=SEATTYPE,max_length=50,default='Regular')

@@ -46,9 +46,16 @@ export const isPathAllowed=(pathname)=>{
     return isRouteRoleMatchs(role)
 }
 
+export const isCustomer = ()=>{
+    const userRole = getRole()
+    
+    return userRole === 'Customer'?true:false
+}
+
 export const commonService ={
     isLoggedIn,
     isPathAllowed,
+    isCustomer
 }
 
 export default commonService

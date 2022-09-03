@@ -39,11 +39,23 @@ const getVendorApplication = (data)=>{
     })
 }
 
+const getSingleVendor = (data)=>{
+    return axios.get(API_URL+`api/vendor/${data}`,{
+        headers:{
+            'Authorization':`Bearer ${token.access}`
+        }
+    })
+    .catch((res)=>{
+        console.log(res);
+    })
+}
+
 const axiosService = {
     getVehicles,
     getSingleCar,
     createVendor,
-    getVendorApplication
+    getVendorApplication,
+    getSingleVendor,
 }
 
 export default axiosService

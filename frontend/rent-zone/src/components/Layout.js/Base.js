@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { checkAuth, getUser } from '../../features/auth/authSlice'
-import { isLoggedIn, isPathAllowed } from '../../utils/commonService'
+import { isCustomer, isLoggedIn, isPathAllowed } from '../../utils/commonService'
 import Footer from '../Footer/Footer'
 import Header from '../Header/Header'
 
@@ -23,9 +23,9 @@ const Base = () => {
   if(isLoggedIn() && isAllowed){
     return (
       <>
-      {!isAllowed ? <Header/>:null}
+      {isCustomer() ? <Header/>:null}
       <Outlet/>
-      {!isAllowed  ? <Footer/>:null}
+      {isCustomer()  ? <Footer/>:null}
       </>
     )
   }else{

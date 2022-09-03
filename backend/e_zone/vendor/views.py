@@ -7,8 +7,8 @@ from .permissions import IsOwnerOrReadOnly
 class VendorViewSet(viewsets.ModelViewSet):
     queryset = Vendor.objects.all()
     serializer_class = VendorSerializer
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly]
-    lookup_field = 'vendor_name'
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly]
+    # lookup_field = 'vendor_name'
     filter_backends = (filters.SearchFilter,)
     search_fields = ['vendor_name','email','GST_number']
     

@@ -9,6 +9,8 @@ import AboutSection from '../components/UI/AboutSection'
 import axiosService from '../features/axios'
 import CarItem from '../components/UI/CarItem'
 import BecomeVendor from '../components/UI/BecomeVendor'
+import { useNavigate } from 'react-router-dom'
+import { getRole } from '../utils/commonService'
 // import ServicesList from '../components/UI/ServicesList'
 
 const HomePage = () => {
@@ -17,18 +19,27 @@ const HomePage = () => {
   const [carData, setCarData] = useState([])
   const data = ''
 
+  const navigate = useNavigate()
+
   useEffect(() => {
     axiosService.getVehicles(data)
     .then((res)=>{
-      setCarData(res.data)
+      setCarData(res.data.results)
     })
   },[])
+  const userRole = getRole()
+  console.log("Role:",userRole);
+  if(userRole === 'Admin'){
+    navigate('/admin')
+  } else if(userRole === 'Vendor'){
+    navigate('/vendor')
+  }
   
   
   useEffect(()=>{
     dispatch(checkAuth())
   },[dispatch])
-  
+
   
   return (
     <>

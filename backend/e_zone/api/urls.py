@@ -4,6 +4,7 @@ from .views import BlacklistTokenUpdateView
 from users.views import MyTokenObtainPairView,RegisterView,Verify_otpView,RetriveUserView,ProfileViewSet
 from store.views import VehicleViewSet
 from vendor.views import VendorViewSet
+from order.views import RentViewSet
 from rest_framework_simplejwt.views import (
     TokenRefreshView,TokenVerifyView
 )
@@ -24,4 +25,5 @@ router = DefaultRouter()
 router.register(r'profile', ProfileViewSet, basename='profile' )
 router.register(r'vehicle',VehicleViewSet,basename='vechicle')
 router.register(r'vendor',VendorViewSet,basename='vendor')
+router.register(r'rent',RentViewSet,basename='rent')
 urlpatterns=urlpatterns+router.urls

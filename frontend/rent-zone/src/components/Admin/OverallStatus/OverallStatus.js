@@ -264,7 +264,7 @@ const OverallStatus = () => {
 							<div className="card flex-fill">
 								<div className="card-header">
 									<div className="card-actions float-end">
-										<input type="radio" className="btn-check" name="btnradio" id="buy" autocomplete="off" checked/>
+										<input type="radio" className="btn-check" name="btnradio" id="buy" autocomplete="off" />
 										<label className="btn btn-sm btn-primary" for="buy">Buy</label>
 
 										<input type="radio" className="btn-check" name="btnradio" id="sell" autocomplete="off"/>

@@ -9,7 +9,7 @@ const VendorApplicationList = () => {
     useEffect(() => {
         axiosService.getVendorApplication(searchData)
         .then((res)=>{
-            setVendorData(res.data)
+            setVendorData(res.data.results)
             
         })
     }, [searchData])
@@ -49,7 +49,8 @@ const VendorApplicationList = () => {
                 <h5 style={{"color":"red"}}>Blocked</h5>
                     </td>}
                 <td>
-                <button onClick={()=>navigate(`${item.vendor_name}`)} className="btn btn-warning">open</button>
+                
+                <button onClick={()=>navigate(`${item.id}`)} className="btn btn-warning">open</button>
                 </td>
             </tr>
 

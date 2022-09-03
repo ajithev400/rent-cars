@@ -7,7 +7,7 @@ import axiosService from '../features/axios';
 
 const CarListing = () => {
   const [carsData, setCarsData] = useState([])
-  // const [searchData, setSearchData] = useState('')
+
 
   const [searchData,setSearchData] = useState('')
   const [sort,setSort] = useState("");
@@ -15,7 +15,7 @@ const CarListing = () => {
   useEffect(() => {
     axiosService.getVehicles(searchData)
     .then((res)=>{
-      setCarsData(res.data)
+      setCarsData(res.data.results)
     })
     // console.log('res:',axiosService.getVehicles());
   }, [searchData])
