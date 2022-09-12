@@ -1,8 +1,10 @@
-from rest_framework import viewsets,filters,permissions
-
+from rest_framework import viewsets,filters,permissions,status
+from rest_framework.response import Response
+from rest_framework.decorators import action
 from .serializer import VendorSerializer
 from .models import Vendor
 from .permissions import IsOwnerOrReadOnly
+from accounts.models import Account
 
 class VendorViewSet(viewsets.ModelViewSet):
     queryset = Vendor.objects.all()
@@ -17,3 +19,17 @@ class VendorViewSet(viewsets.ModelViewSet):
         email = self.request.user.email,
         is_active = False, 
         is_verified = False)
+
+    # @action(detail=True,methods=['POST']) 
+    # def to_vendor(self,request,pk):
+    #     user = request.user
+        
+    #     user = Account.objects.get(user)
+
+    #     if user.role != "Customer":
+    #         return Response({'message':'Somthing Went wrong!'})
+    #     user.role = "Vender"
+
+    #     return Response({'message':'Role changed successfully'})
+        
+        

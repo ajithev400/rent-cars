@@ -5,7 +5,7 @@ from accounts.models import Account
 
 # Create your models here.
 class Profile(models.Model):
-    user = models.ForeignKey(Account, related_name='profile', on_delete=models.CASCADE)
+    owner = models.ForeignKey(Account, related_name='profile', on_delete=models.CASCADE)
     first_name = models.CharField(max_length=50, blank=True)
     last_name = models.CharField(max_length=100, blank=True)
     gender = models.CharField(max_length=10, blank=False, null=True,choices=[
@@ -27,7 +27,7 @@ class Profile(models.Model):
         return self.first_name
 
 class Address(models.Model):
-    user = models.ForeignKey(Account,on_delete=models.CASCADE,null=True)
+    owner = models.ForeignKey(Account,on_delete=models.CASCADE,null=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     phone = models.CharField(max_length=15)

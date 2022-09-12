@@ -8,7 +8,7 @@ class VendorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Vendor
-        # fields = ('vendor_name','GST_number','email', 'user', 'mobile', 'image', 'is_verified', 'is_active')
+        # fields = ('vendor_name','GST_number','email', 'owner', 'mobile', 'image', 'is_verified', 'is_active')
         fields = '__all__'
         # lookup_field = 'vendor_name'
         # extra_kwargs = {

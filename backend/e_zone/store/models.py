@@ -33,10 +33,28 @@ class Vehicles(models.Model):
     def __str__(self):
         return self.vehicle_name
 
+class VehicleCurrentStatus(models.Model):
+    STATUS =(
+        ("After Returns","After Returns"),
+        ("Before Returns","Before Returns")
+    )
+    vehicle = models.ForeignKey(Vehicles, on_delete=models.CASCADE)
+    owner = models.ForeignKey(Account,on_delete=models.CASCADE,blank=True,null=True)
+    image1 = models.ImageField(upload_to='vehicles/vehicleStatus',null=True,blank=True)
+    image2 = models.ImageField(upload_to='vehicles/vehicleStatus',null=True,blank=True)
+    image3 = models.ImageField(upload_to='vehicles/vehicleStatus',null=True,blank=True)
+    image4 = models.ImageField(upload_to='vehicles/vehicleStatus',null=True,blank=True)
+    status = models.CharField(choices=STATUS,max_length=50,default='After Returns')
+    after_returns = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-updated_at','-created_at'] 
 
 class ReviewRating(models.Model):
     vehicle = models.ForeignKey(Vehicles, on_delete=models.CASCADE)
-    user = models.ForeignKey(Account,on_delete=models.CASCADE)
+    owner = models.ForeignKey(Account,on_delete=models.CASCADE)
     subject = models.CharField(max_length=100, blank=True)
     review = models.TextField(max_length=500, blank=True)
     rating = models.FloatField()

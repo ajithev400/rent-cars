@@ -1,12 +1,18 @@
+from email import message
+from rest_framework import status
 from rest_framework import viewsets, filters, permissions
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from .serializers import CarsSerializers
 from .models import Vehicles
+from order.models import Rent
 from .permissions import IsOwnerOrReadOnly
+from order.serializer import RentSerializer
 
 class VehicleViewSet(viewsets.ModelViewSet):
     queryset = Vehicles.objects.all()
     serializer_class = CarsSerializers
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly]
+    # permission_classes = [permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly]
     lookup_field = 'slug'
     filter_backends = (filters.SearchFilter,)
     search_fields = ['vehicle_name', 'slug', 'brand', 'description','transmission']
