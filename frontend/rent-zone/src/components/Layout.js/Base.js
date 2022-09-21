@@ -9,16 +9,16 @@ import Header from '../Header/Header'
 const Base = () => {
 
   const dispatch = useDispatch()
-
   const {pathname} = useLocation()
+  useEffect(() => {
+    dispatch(checkAuth()) 
+    dispatch(getUser())
+  }, [dispatch])  
+
 
   const isAllowed = isPathAllowed(pathname)
 
 
-    useEffect(() => {
-      dispatch(checkAuth()) 
-      dispatch(getUser())
-    }, [dispatch])  
   
   if(isLoggedIn() && isAllowed){
     return (

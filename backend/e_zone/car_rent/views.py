@@ -2,6 +2,7 @@ from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.viewsets import ViewSet
 from .models import *
 from .serializers import *
 from datetime import datetime
@@ -14,7 +15,7 @@ import pytz
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def getLocations(request):
-    locations = Locations.objects.filter(is_active=True).order_by("short_name")
+    locations = Locations.objects.filter(is_active=True).order_by("name")
     serializer = LocationsSerializer(locations, many=True)
     return Response(serializer.data)
 
@@ -27,7 +28,6 @@ def createLocation(request):
     try:
         location = Locations.objects.create(
             name=data["name"],
-            short_name=data["shortName"],
             creator=creator_str,
             supp_unique_var=data["supp_unique_var"],
         )
@@ -54,7 +54,7 @@ def updateLocation(request, pk):
 
     data = request.data
     location.name = data["name"]
-    location.short_name = data["shortName"]
+    location.name = data["shortName"]
     location.is_active = data["isActive"]
 
     location.save()
@@ -92,114 +92,116 @@ def newLocationUploadImage(request):
 
 # CARS
 
+# class ListCars(ViewSet.ListView):
+#     queryset = Cars.objects.all()
+#     serializers_class = CarsRentsSerializer()
 
-@api_view(["GET"])
-@permission_classes([IsAdminUser])
-def getCars(request):
-    cars = Cars.objects.all().order_by("short_name")
-    serializer = CarsSerializer(cars, many=True)
-    return Response(serializer.data)
-
-
-@api_view(["POST"])
-# @permission_classes([IsAdminUser])
-def createCar(request):
-    data = request.data
-    user = request.user
-    obj_location = Locations.objects.get(id=data["location"])
-
-    try:
-        car = Cars.objects.create(
-            name=data["name"],
-            short_name=data["shortName"],
-            code_registration=data["codeRegistration"],
-            main_location=obj_location,
-            owner= user,
-            creator=data["creator"],
-            location=data["location"],
-            to_the_location=data["location"],
-        )
-
-        serializer = CarsSerializer(car, many=False)
-        return Response(serializer.data)
-
-    except:
-        message = {"detail": "The registration code provided already exists"}
-        return Response(message, status=status.HTTP_400_BAD_REQUEST)
+# @api_view(["GET"])
+# @permission_classes([IsAuthenticated])
+# def getCars(request):
+#     cars = Cars.objects.all().order_by("name")
+#     serializer = CarsSerializer(cars, many=True)
+#     return Response(serializer.data)
 
 
-@api_view(["POST"])
-def carUploadImage(request):
-    data = request.data
-    car_id = data["car_id"]
-    car = Cars.objects.get(id=car_id)
+# @api_view(["POST"])
+# # @permission_classes([IsAdminUser])
+# def createCar(request):
+#     data = request.data
+#     user = request.user
+#     obj_location = Locations.objects.get(id=data["location"])
 
-    car.image = request.FILES.get("image")
-    car.save()
+#     try:
+#         car = Cars.objects.create(
+#             name=data["name"],
+            
+#             code_registration=data["codeRegistration"],
+#             main_location=obj_location,
+#             owner= user,
+#             creator=data["creator"],
+#             location=data["location"],
+#             to_the_location=data["location"],
+#         )
 
-    serializer = CarsSerializer(car, many=False)
-    return Response(serializer.data)
+#         serializer = CarsSerializer(car, many=False)
+#         return Response(serializer.data)
 
-
-@api_view(["POST"])
-def newCarUploadImage(request):
-    data = request.data
-    codeRegistration = data["codeRegistration"]
-    car = Cars.objects.get(code_registration=codeRegistration)
-
-    car.image = request.FILES.get("image")
-
-    car.save()
-
-    serializer = CarsSerializer(car, many=False)
-    return Response(serializer.data)
-
-
-@api_view(["GET"])
-@permission_classes([IsAuthenticated])
-def getCarById(request, pk):
-    car = Cars.objects.get(id=pk)
-    serializer = CarsSerializerWithMainLocation(car, many=False)
-    return Response(serializer.data)
+#     except:
+#         message = {"detail": "The registration code provided already exists"}
+#         return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(["PUT"])
-@permission_classes([IsAuthenticated])
-def updateCar(request, pk):
-    data = request.data
-    obj_location = Locations.objects.get(id=data["selectLocation"])
-    car = Cars.objects.get(id=pk)
+# @api_view(["POST"])
+# def carUploadImage(request):
+#     data = request.data
+#     car_id = data["car_id"]
+#     car = Cars.objects.get(id=car_id)
 
-    car_ARC = Cars_ARC.objects.create(
-        id_car=car.id,
-        id_location=car.main_location.id,
-        name=car.name,
-        short_name=car.short_name,
-        code_registration=car.code_registration,
-        creator_ARC=data["creator"],
-        type=data["type"],
-        on_the_way=car.on_the_way,
-        location=car.location,
-        to_the_location=car.to_the_location,
-        come_back=car.come_back,
-    )
+#     car.image = request.FILES.get("image")
+#     car.save()
 
-    try:
-        car.name = data["name"]
-        car.short_name = data["shortName"]
-        car.main_location = obj_location
-        car.code_registration = data["codeRegistration"]
-        car.is_active = data["isActive"]
+#     serializer = CarsSerializer(car, many=False)
+#     return Response(serializer.data)
 
-        car.save()
 
-        serializer = CarsSerializer(car, many=False)
+# @api_view(["POST"])
+# def newCarUploadImage(request):
+#     data = request.data
+#     codeRegistration = data["codeRegistration"]
+#     car = Cars.objects.get(code_registration=codeRegistration)
 
-        return Response(serializer.data)
+#     car.image = request.FILES.get("image")
 
-    except:
-        message = {"detail": "The registration code provided already exists"}
-        return Response(message, status=status.HTTP_400_BAD_REQUEST)
+#     car.save()
+
+#     serializer = CarsSerializer(car, many=False)
+#     return Response(serializer.data)
+
+
+# @api_view(["GET"])
+# @permission_classes([IsAuthenticated])
+# def getCarById(request, pk):
+#     car = Cars.objects.get(id=pk)
+#     serializer = CarsSerializerWithMainLocation(car, many=False)
+#     return Response(serializer.data)
+
+
+# @api_view(["PUT"])
+# @permission_classes([IsAuthenticated])
+# def updateCar(request, pk):
+#     data = request.data
+#     obj_location = Locations.objects.get(id=data["selectLocation"])
+#     car = Cars.objects.get(id=pk)
+
+#     car_ARC = Cars_ARC.objects.create(
+#         id_car=car.id,
+#         id_location=car.main_location.id,
+#         name=car.name,
+#         code_registration=car.code_registration,
+#         creator_ARC=data["creator"],
+#         type=data["type"],
+#         on_the_way=car.on_the_way,
+#         location=car.location,
+#         to_the_location=car.to_the_location,
+#         come_back=car.come_back,
+#     )
+
+#     try:
+#         car.name = data["name"]
+#         car.name = data["shortName"]
+#         car.main_location = obj_location
+#         car.code_registration = data["codeRegistration"]
+#         car.is_active = data["isActive"]
+
+#         car.save()
+
+#         serializer = CarsSerializer(car, many=False)
+
+#         return Response(serializer.data)
+
+#     except:
+#         message = {"detail": "The registration code provided already exists"}
+#         return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
 
 # CARLIST BY LOCATION
@@ -210,7 +212,7 @@ def updateCar(request, pk):
 def getCarListByLocationToRent(request, pk):
     carList = Cars.objects.filter(
         location=pk, is_active=True, on_the_way=False
-    ).order_by("short_name")
+    ).order_by("name")
     serializer = CarsSerializer(carList, many=True)
 
     return Response(serializer.data)
@@ -293,7 +295,7 @@ def getCarListByLocationReservations(request, pk):
         carReservations__location=pk,
         carReservations__date_from__gt=today,
         carReservations__is_active=True,
-    ).order_by("short_name")
+    ).order_by("name")
 
     unique_cars_list = []
     for car in carList:
@@ -309,7 +311,7 @@ def getCarListByLocationReservations(request, pk):
 @permission_classes([IsAuthenticated])
 def getCarListByLocationNewReservations(request, pk):
 
-    carList = Cars.objects.filter(location=pk).order_by("short_name")
+    carList = Cars.objects.filter(location=pk).order_by("name")
 
     serializer = CarsSerializer(carList, many=True)
 
@@ -317,7 +319,14 @@ def getCarListByLocationNewReservations(request, pk):
 
 
 # CAR RESERVATION
-
+def time_converter(time):
+    s = time
+    hours, minutes, seconds = (["0", "0"] + s.split(":"))[-3:]
+    hours = int(hours)
+    minutes = int(minutes)
+    seconds = float(seconds)
+    miliseconds = int(3600000 * hours + 60000 * minutes + 1000 * seconds)
+    return miliseconds
 
 def convertDate(str):
     date = str
@@ -371,10 +380,10 @@ def createReservationCar(request):
     obj_rents = Cars_Rents.objects.filter(id_cars=data["idCars"], is_active=True)
 
     if data["location"] == obj_car.location:
-        extension = timedelta(milliseconds=data["timeReservation"])
+        extension = timedelta(milliseconds=int(data["timeReservation"]))
     else:
         extension = timedelta(
-            milliseconds=data["timeReservation"] + data["transferTime"]
+            milliseconds=int(data["timeReservation"]) + int(data["transferTime"])
         )
 
     for res in obj_reservations:
@@ -420,7 +429,7 @@ def createReservationCar(request):
             creator=data["creator"],
         )
 
-        return Response("Success")
+        return Response("Success",status=status.HTTP_201_CREATED)
 
     except:
         message = {"detail": "Something went wrong"}
@@ -462,13 +471,15 @@ def deleteReservation(request, pk):
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def getReservationById(request, pk):
-    reservation = Cars_Reservation.objects.get(id=pk)
+    try:
+        reservation = Cars_Reservation.objects.get(id=pk)
 
-    serializer = CarsReservationSerializer(reservation, many=False)
-    return Response(serializer.data)
+        serializer = CarsReservationSerializer(reservation, many=False)
+        return Response(serializer.data)
+    except:
+        return Response({"Message":"Reservation doesn't exist !"},status=status.HTTP_404_NOT_FOUND)
 
-
-@api_view(["PUT"])
+@api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def updateReservation(request, pk):
 
@@ -491,7 +502,7 @@ def updateReservation(request, pk):
             extension = timedelta(milliseconds=data["timeReservation"])
         else:
             extension = timedelta(
-                milliseconds=data["timeReservation"] + data["transferTime"]
+                milliseconds=data["timeReservation"] + int(data["transferTime"])
             )
 
         if date_obj_start > (res.date_from - extension) and date_obj_start < (
@@ -512,7 +523,7 @@ def updateReservation(request, pk):
             extension = timedelta(milliseconds=data["timeReservation"])
         else:
             extension = timedelta(
-                milliseconds=data["timeReservation"] + data["transferTime"]
+                milliseconds=data["timeReservation"] + int(data["transferTime"])
             )
 
         if date_obj_start > (ren.date_from - extension) and date_obj_start < (
@@ -564,14 +575,16 @@ def updateReservation(request, pk):
     return Response("successful")
 
 
-@api_view(["PUT"])
+@api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def filterReservations(request):
     data = request.data
+    print("DATAAAAA:",data)
     start_date = convertDate(data["date_from"])
     end_date = convertDate(data["date_to"])
-
-    extension = timedelta(milliseconds=data["transfer_time"])
+    
+    time = time_converter(data["transfer_time"])
+    extension = timedelta(milliseconds=time)
 
     cars_with_available_terms_list = []
     cars_not_available_list = []
@@ -649,6 +662,7 @@ def getReservationList(request):
 @permission_classes([IsAuthenticated])
 def createRentCar(request):
     data = request.data
+    print("RENT DATA :::::",data)
     date_obj_start = timezone.now()
     date_obj_end = convertDate(data["date_to"])
 
@@ -669,10 +683,10 @@ def createRentCar(request):
 
     for i in obj_reservations:
         if data["location"] == i.location:
-            extension = timedelta(milliseconds=data["setCarRent"])
+            extension = timedelta(milliseconds=int(data["setCarRent"]))
         else:
             extension = timedelta(
-                milliseconds=data["setCarRent"] + data["transferTime"]
+                milliseconds=int(data["setCarRent"]) + int(data["transferTime"])
             )
 
         if date_obj_start > (i.date_from - extension) and date_obj_start < (
@@ -690,10 +704,10 @@ def createRentCar(request):
 
     for ren in obj_rents:
         if data["location"] == ren.location:
-            extension = timedelta(milliseconds=data["setCarRent"])
+            extension = timedelta(milliseconds=int(data["setCarRent"]))
         else:
             extension = timedelta(
-                milliseconds=data["setCarRent"] + data["transferTime"]
+                milliseconds=int(data["setCarRent"]) + int(data["transferTime"])
             )
 
         if date_obj_start > (ren.date_to + extension):
@@ -717,8 +731,9 @@ def createRentCar(request):
             obj_reservation.save()
 
         car_rent = Cars_Rents.objects.create(
-            id_cars=obj_car,
+            id_cars=data["id_car"],
             client_name=data["client_name"],
+            client = request.user,
             client_document_type=data["client_document_type"],
             client_document_identification=data["client_document_identification"],
             client_phone=data["client_phone"],
@@ -739,7 +754,6 @@ def createRentCar(request):
             id_car=obj_car.id,
             id_location=obj_car.main_location.id,
             name=obj_car.name,
-            short_name=obj_car.short_name,
             code_registration=obj_car.code_registration,
             creator_ARC=data["creator"],
             type="rent car",
@@ -757,7 +771,7 @@ def createRentCar(request):
         return Response("Car was rent")
 
     except:
-        message = {"detail": "Something went wrong"}
+        message = {"Message": "Something went wrong"}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
 

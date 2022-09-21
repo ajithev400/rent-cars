@@ -25,7 +25,7 @@ class CarsSerializerReservation(serializers.ModelSerializer):
         fields = ["id", "name", "short_name", "code_registration", "image", "type"]
 
     def get_type(self, obj):
-        return "Rezerwacja"
+        return "Reservation"
 
 
 class CarsSerializerRents(serializers.ModelSerializer):
@@ -36,7 +36,7 @@ class CarsSerializerRents(serializers.ModelSerializer):
         fields = ["id", "name", "short_name", "code_registration", "image", "type"]
 
     def get_type(self, obj):
-        return "Najem"
+        return "Rent"
 
 
 class CarsSerializerWithMainLocation(serializers.ModelSerializer):

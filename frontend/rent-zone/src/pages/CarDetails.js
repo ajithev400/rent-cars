@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Col, Container, Row } from 'reactstrap'
 import Helmet from '../components/Helmet/Helmet'
-import BookingForm from '../components/UI/BookingForm'
-import PaymentMethod from '../components/UI/PaymentMethod'
 import axiosService from '../features/axios'
+import ReservationForm from './ReservationForm'
 
 const CarDetails = () => {
 
   const { slug } = useParams();
-
+  
   const [singleCarItem, setSingleCarItem] = useState({})
   useEffect(() => {
     axiosService.getSingleCar(slug)
@@ -21,7 +20,7 @@ const CarDetails = () => {
 
   return (
     <>
-    <Helmet title={singleCarItem.vehicle_name}>
+    <Helmet title={singleCarItem.name}>
       <section>
         <Container>
           <Row>
@@ -31,7 +30,7 @@ const CarDetails = () => {
 
             <Col lg="6">
               <div className="car__info">
-                <h2 className="section__title">{singleCarItem.vehicle_name}</h2>
+                <h2 className="section__title">{singleCarItem.name}</h2>
 
                 <div className=" d-flex align-items-center gap-5 mb-4 mt-3">
                   <h6 className="rent__price fw-bold fs-4">
@@ -111,19 +110,7 @@ const CarDetails = () => {
               </div>
             </Col>
 
-            <Col lg="7" className="mt-5">
-              <div className="booking-info mt-5">
-                <h5 className="mb-4 fw-bold ">Booking Information</h5>
-                <BookingForm />
-              </div>
-            </Col>
-
-            <Col lg="5" className="mt-5">
-              <div className="payment__info mt-5">
-                <h5 className="mb-4 fw-bold ">Payment Information</h5>
-                <PaymentMethod />
-              </div>
-            </Col>
+            <ReservationForm/>
           </Row>
         </Container>
       </section>

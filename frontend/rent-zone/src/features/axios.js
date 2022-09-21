@@ -42,11 +42,27 @@ const getVendorApplication = (data)=>{
 const getSingleVendor = (data)=>{
     return axios.get(API_URL+`api/vendor/${data}`,{
         headers:{
-            'Authorization':`Bearer ${token.access}`
+            'Authorization':`Bearer ${token.access}`,
         }
     })
     .catch((res)=>{
         console.log(res);
+    })
+}
+
+const findCars = (formData) =>{ 
+    console.log("axios formData",formData);
+    return axios.post(API_URL+'api/filter/reservation/',formData,{
+        headers:{
+            'Authorization':`Bearer ${token.access}`,
+        }
+    })
+}
+const getUserProfile = (pk)=>{
+    return axios.get(API_URL+`api/profile/${pk}/`,{
+        headers:{
+            'Authorization':`Bearer ${token.access}`,
+        }
     })
 }
 
@@ -56,6 +72,8 @@ const axiosService = {
     createVendor,
     getVendorApplication,
     getSingleVendor,
+    findCars,
+    getUserProfile,
 }
 
 export default axiosService

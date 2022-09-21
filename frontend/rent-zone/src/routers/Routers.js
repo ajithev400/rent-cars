@@ -16,6 +16,7 @@ import VehicleList from '../pages/VehicleList'
 import OverallStatus from '../components/Admin/OverallStatus/OverallStatus'
 import VendorApplicationList from '../components/Admin/VendorAppllicationList/VendorApplicationList'
 import VendorDetails from '../pages/VendorDetails/VendorDetails'
+import UserProfile from '../pages/UserProfile'
 
 const Routers = () => {
   return (
@@ -29,8 +30,11 @@ const Routers = () => {
           <Route path ='cars/:slug' element = {<CarDetails/>} />
           <Route path ='blogs' element = {<Blog/>} />
           <Route path ='Blogs/:slug' element = {<BlogDetails/>} />
+          <Route path ='account' element = {<UserProfile/>} />
           <Route path ='register-vendor' element = {<VendorRegPage/>} />   
-          <Route path ='vendor' element = {<VendorPage/>} />   
+          <Route path ='vendor' element = {<VendorPage/>}>
+            
+            </Route>   
           <Route path ='admin' element = {<AdminPage/>}>
             <Route index element= {<OverallStatus/>} />
             <Route path ='vehicles' element= {<VehicleList/>} />

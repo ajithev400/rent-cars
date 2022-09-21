@@ -1,3 +1,4 @@
+from urllib import request
 from rest_framework import viewsets,filters,permissions,status
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -15,8 +16,11 @@ class VendorViewSet(viewsets.ModelViewSet):
     search_fields = ['vendor_name','email','GST_number']
     
     def perform_create(self, serializer):
-        serializer.save(user = self.request.user, 
-        email = self.request.user.email,
+        user = self.request.user
+        user.role = "Vender"
+        user.save()
+        serializer.save(owner = self.request.user, 
+        email = user.email,       
         is_active = False, 
         is_verified = False)
 

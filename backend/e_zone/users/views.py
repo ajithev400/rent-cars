@@ -92,6 +92,11 @@ class ProfileViewSet(viewsets.ModelViewSet):
     serializer_class = ProfileSerializer
     permission_class = [permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly]
 
+    def retrieve(self,requst, pk):
+        user = Account.objects.get(id=pk)
+        profile = Profile.objects.get(owner=user)
+        serializer = ProfileSerializer(profile)
+        return Response(serializer.data)
 
 
 class UserViewSet(viewsets.ViewSet) :

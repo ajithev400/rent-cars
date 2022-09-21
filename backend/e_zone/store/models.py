@@ -17,7 +17,7 @@ class Vehicles(models.Model):
     brand = models.CharField(max_length=150, blank=False, null=False)
     model = models.CharField(max_length=150, blank=False, null= False)
     price = models.IntegerField(null=False,blank=False)
-    owner = models.ForeignKey(Vendor, related_name='posts', on_delete= models.CASCADE, blank=True, null=True)
+    owner = models.ForeignKey(Vendor, on_delete= models.CASCADE, blank=True, null=True)
     image = models.ImageField(upload_to='vehicles',null=True,blank=True)
     speed = models.CharField(max_length=50, blank=True, null=True)
     seat_type = models.CharField(choices=SEATTYPE,max_length=50,default='Regular')

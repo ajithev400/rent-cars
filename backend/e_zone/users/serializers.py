@@ -32,7 +32,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
         
 
         profile = Profile.objects.create(
-            user = user,
+            owner = user,
             email = validated_data['email'],
             first_name = validated_data['first_name'],
             last_name = validated_data['last_name'],

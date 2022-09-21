@@ -5,7 +5,7 @@ import "../../styles/car-item.css";
 
 const CarItem = (props) => {
 
-    const { image, model, vehicle_name, slug, transmission, speed, price } = props.item;
+    const { image, model, name, slug, transmission, speed, price } = props.item;
     const navigate = useNavigate()
   return (
     <Col lg="4" md="4" sm="6" className="mb-5">
@@ -15,7 +15,7 @@ const CarItem = (props) => {
         </div>
 
         <div className="car__item-content mt-4">
-          <h4 className="section__title text-center">{vehicle_name}</h4>
+          <h4 className="section__title text-center">{name}</h4>
           <h6 className="rent__price text-center mt-">
           ₹{price}.00 <span>/ Day</span>
           </h6>

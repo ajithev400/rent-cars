@@ -3,15 +3,15 @@ from rest_framework import status
 from rest_framework import viewsets, filters, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from .serializers import CarsSerializers
-from .models import Vehicles
 from order.models import Rent
 from .permissions import IsOwnerOrReadOnly
 from order.serializer import RentSerializer
+from car_rent.models import Cars
+from car_rent.serializers import CarsSerializer
 
 class VehicleViewSet(viewsets.ModelViewSet):
-    queryset = Vehicles.objects.all()
-    serializer_class = CarsSerializers
+    queryset = Cars.objects.all()
+    serializer_class = CarsSerializer
     # permission_classes = [permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly]
     lookup_field = 'slug'
     filter_backends = (filters.SearchFilter,)

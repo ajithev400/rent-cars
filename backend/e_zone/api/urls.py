@@ -22,12 +22,12 @@ urlpatterns = [
     path('getuser/', RetriveUserView.as_view(), name='getuser'),
 
     # cars
-    path("api/cars/image/upload/", views.carUploadImage, name="car-upload-image"),
-    path("api/new/cars/upload/", views.newCarUploadImage, name="new-car-upload-image"),
-    path("api/cars/", views.getCars, name="cars-list"),
-    path("api/car/create/", views.createCar, name="create-car"),
-    path("api/car/<str:pk>/", views.getCarById, name="get-car-by-id"),
-    path("api/car/update/<str:pk>/", views.updateCar, name="car-update"),
+    # path("cars/image/upload/", views.carUploadImage, name="car-upload-image"),
+    # path("new/cars/upload/", views.newCarUploadImage, name="new-car-upload-image"),
+    # path("cars/", views.getCars, name="cars-list"),
+    # path("car/create/", views.createCar, name="create-car"),
+    # path("car/<str:pk>/", views.getCarById, name="get-car-by-id"),
+    # path("car/update/<str:pk>/", views.updateCar, name="car-update"),
     # carListByLocation
     path(
         "mainpage/<str:pk>/car-list/to-rent/",
@@ -77,48 +77,49 @@ urlpatterns = [
     ),
     # carReservation
     path(
-        "api/filter/reservation/", views.filterReservations, name="filter-reservations"
+        "filter/reservation/", views.filterReservations, name="filter-reservations"
     ),
     path(
-        "api/reservation/car/create/",
+        "reservation/car/create/",
         views.createReservationCar,
         name="create-reservation-car",
     ),
     path(
-        "api/reservation/list/car/<str:pk>/<str:loc>/",
+        "reservation/list/car/<str:pk>/<str:loc>/",
         views.listReservationCar,
         name="list-reservation-car",
     ),
     path(
-        "api/reservation/delete/<str:pk>/",
+        "reservation/delete/<str:pk>/",
         views.deleteReservation,
         name="reservation-delete",
     ),
     path(
-        "api/car/single/reservation/<str:pk>/edit/",
+        "car/single/reservation/<str:pk>/",
         views.getReservationById,
         name="get-reservation-by-id",
     ),
     path(
-        "api/reservation/update/<str:pk>/",
+        "reservation/update/<str:pk>/",
         views.updateReservation,
         name="update-reservation",
     ),
     # carRent
-    path("api/rent/car/create/", views.createRentCar, name="create-rent-car"),
-    path("api/rents/list/car/<str:pk>/", views.listRentsCar, name="list-rents-car"),
-    path("api/rent/edit/<str:pk>/", views.editCarRent, name="edit-rent"),
+    path("rent/car/create/", views.createRentCar, name="create-rent-car"),
+    path("rents/list/car/<str:pk>/", views.listRentsCar, name="list-rents-car"),
+    path("rent/edit/<str:pk>/", views.editCarRent, name="edit-rent"),
     # car pick-up
     path(
-        "api/<str:pk>/rent-details/",
+        "<str:pk>/rent-details/",
         views.getRentDetailsByCarId,
         name="get-rent-details-by-car-id",
     ),
-    path("api/rent/update/<str:pk>/", views.carUpdateRent, name="car-update-rent"),
+    path("rent/update/<str:pk>/", views.carUpdateRent, name="car-update-rent"),
     
 ]
 router = DefaultRouter()
 
+# router.register(r'list-cars',views.ListCars, basename='list-cars')
 router.register(r'user',UserViewSet,basename='user' )
 router.register(r'profile', ProfileViewSet, basename='profile' )
 router.register(r'vehicle',VehicleViewSet,basename='vechicle')
