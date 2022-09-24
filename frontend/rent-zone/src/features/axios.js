@@ -16,7 +16,7 @@ const createVendor = ( formData ) =>{
     axios.post(API_URL+'api/vendor/',formData,{
         headers:{
             'Content-Type':'application/json',
-            "content-type": "multipart/form-data",
+            "Content-Type": "multipart/form-data",
             'Authorization':`Bearer ${token.access}`
         }
     })
@@ -65,6 +65,31 @@ const getUserProfile = (pk)=>{
         }
     })
 }
+const createCarReservation = (formData)=>{
+    return axios.post(API_URL+'api/reservation/car/create/',formData,{
+        headers:{
+           
+            "Content-Type": "multipart/form-data",
+            'Authorization':`Bearer ${token.access}`
+        }
+    })
+}
+
+const listReservationCars = (data) =>{
+    return axios.get(API_URL+`api/reservation/list/user/car/${data}/0/`,{
+        headers:{           
+            'Authorization':`Bearer ${token.access}`
+        }
+    })
+}
+
+const getReservationDetails = (data)=>{
+    return axios.get(API_URL+`api/car/single/reservation/${data}/`,{
+        headers:{           
+            'Authorization':`Bearer ${token.access}`
+        }
+    })
+}
 
 const axiosService = {
     getVehicles,
@@ -74,6 +99,9 @@ const axiosService = {
     getSingleVendor,
     findCars,
     getUserProfile,
+    createCarReservation,
+    listReservationCars,
+    getReservationDetails,
 }
 
 export default axiosService

@@ -4,36 +4,66 @@ import masterCard from "../assets/all-images/master-card.jpg";
 import paypal from "../assets/all-images/paypal.jpg";
 import "../styles/payment-method.css";
 import "../styles/booking-form.css";
-const ReservationForm = () => {
-    const userdata = JSON.parse(localStorage.getItem('user'))
+import axiosService from '../features/axios';
+import { toast } from 'react-toastify';
 
+
+const ReservationForm = ({singleCar}) => {
+    const userdata = JSON.parse(localStorage.getItem('user'))
+    
+    const date = new Date()
+    const miliSec = date.getTime()
+    var hr = date.getHours()
+    var min = date.getMinutes()
+    var sec = date.getSeconds()    
+    const currentTime = hr +":"+min+":"+sec
+   
     const [formData, setFormData] = useState({
         name:userdata.first_name,
         dateFrom:'',
         dateTo:'',
-        idCars:'',
-        location:1,
         timeReservation:'',
-        transferTime:'',
-        documentType:'',
         IdNumber:'',
-        phone:'',
-        email:'',
         note:'',
-        creator:'',
+        idCars:'',
+        location:'',
+        documentType:'Driving Licence',
+        phone:userdata.mobile,
+        email:userdata.email,
+        creator:userdata.id,
+        transferTime:miliSec,
     })
-    // useEffect(() => {
-    //   setFormData(userdata)
-    // }, [])
-    const {name,dateFrom,dateTo,idCars,location,timeReservation,transferTime,documentType,IdNumber,phone,email,note,creator} = formData
-    console.log("User:",formData);
+    useEffect(() => {
+        setFormData({...formData,idCars:singleCar.id, 
+            location:singleCar.location, 
+            creator:singleCar.owner,
+            // dateFrom:
+        })
+    }, [singleCar.owner,singleCar.location,singleCar.id])
+    
+    const {name,dateFrom,dateTo,timeReservation,documentType,IdNumber,phone,email,note} = formData
     const handleOnChange =(e)=>{
         setFormData({...formData,[e.target.name]:e.target.value})
     }
-    const submitHandler = (event) => {
-        event.preventDefault();
+    const handleDateChange = (e)=>{
+        setFormData({...formData,[e.target.name]:e.target.value +" "+ currentTime})
+        
+    }
+    const handleTimeChange = (e)=>{
+        setFormData({...formData,[e.target.name]:miliSec})
+    }
+    const submitHandler = (e) => {
+        e.preventDefault();
+        axiosService.createCarReservation(formData)
+        .then((res)=>{
+          toast.success(res.data)
+        })
+        .catch((res)=>{
+            toast.error(res.message)
+        })
       };
-
+    
+    
     
   return (
     <>  
@@ -62,7 +92,7 @@ const ReservationForm = () => {
                     <input 
                     type="text" 
                     placeholder="Last Name"
-                    onChange={handleOnChange}
+                    // onChange={handleOnChange}
                     />
                 </FormGroup>
 
@@ -70,6 +100,7 @@ const ReservationForm = () => {
                     <input 
                     type="email" 
                     placeholder="Email" 
+                    onChange={handleOnChange}
                     name='email'
                     value={email}
                     />
@@ -80,6 +111,7 @@ const ReservationForm = () => {
                     placeholder="Phone Number" 
                     name='phone'
                     value={phone}
+                    onChange={handleOnChange}
                     />
                 </FormGroup>
 
@@ -94,10 +126,10 @@ const ReservationForm = () => {
                 </FormGroup> 
 
                 <FormGroup className="booking__form d-inline-block me-4 mb-4">
-                    <select name="documentType">
-                    <option value="driving Licence">Driving Licence</option>
-                    <option value="aadhar">Aadhar</option>
-                    <option value="PAN number">PAN Number</option>
+                    <select name="documentType" value={documentType} onChange={handleOnChange}>
+                    <option >Driving Licence</option>
+                    <option >Aadhar</option>
+                    <option >PAN Number</option>
                     </select>
                 </FormGroup>
                 <FormGroup className="booking__form d-inline-block ms-1 mb-4">
@@ -110,10 +142,22 @@ const ReservationForm = () => {
                 </FormGroup> 
 
                 <FormGroup className="booking__form d-inline-block me-1 mb-4">
-                    <input type="date" placeholder="Journey Date" />
+                    <input 
+                    type="date" 
+                    placeholder="Journey Date" 
+                    onChange={handleDateChange}
+                    name='dateFrom'
+                    value={dateFrom}
+                    />
                 </FormGroup>
                 <FormGroup className="booking__form d-inline-block me-4 mb-4">
-                    <input type="date" placeholder="Journey Date" />
+                    <input 
+                    type="date" 
+                    placeholder="Return Date" 
+                    onChange={handleDateChange}
+                    name='dateTo'
+                    value={dateTo}
+                    />
                 </FormGroup>
                 <FormGroup className="booking__form d-inline-block ms-1 mb-4">
                     <input
@@ -122,7 +166,7 @@ const ReservationForm = () => {
                     className="time__picker"
                     name='timeReservation'
                     value={timeReservation}
-                    onChange={handleOnChange}
+                    onChange={handleTimeChange}
                     />
                 </FormGroup>
 

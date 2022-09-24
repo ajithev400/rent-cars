@@ -110,7 +110,7 @@ const CarDetails = () => {
               </div>
             </Col>
 
-            <ReservationForm/>
+            <ReservationForm singleCar = {singleCarItem}/>
           </Row>
         </Container>
       </section>

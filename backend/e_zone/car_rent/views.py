@@ -1,7 +1,10 @@
+from http import client
+from urllib import request
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.views import APIView
 from rest_framework.viewsets import ViewSet
 from .models import *
 from .serializers import *
@@ -368,6 +371,7 @@ def convertDate(str):
 @permission_classes([IsAuthenticated])
 def createReservationCar(request):
     data = request.data
+    
     date_obj_start = convertDate(data["dateFrom"])
     date_obj_end = convertDate(data["dateTo"])
 
@@ -418,6 +422,7 @@ def createReservationCar(request):
         car_reservation = Cars_Reservation.objects.create(
             id_cars=obj_car,
             client_name=data["name"],
+            client= request.user,
             client_document_type=data["documentType"],
             client_document_identification=data["IdNumber"],
             client_phone=data["phone"],
@@ -428,7 +433,7 @@ def createReservationCar(request):
             location=obj_location,
             creator=data["creator"],
         )
-
+        
         return Response("Success",status=status.HTTP_201_CREATED)
 
     except:
@@ -451,6 +456,19 @@ def listReservationCar(request, pk, loc):
     serializer = CarsReservationSerializer(carListReservationGroupBy, many=True)
     return Response(serializer.data)
 
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def listUserReservationCar(request, pk, loc):
+    client = Account.objects.get(id=pk)
+    if loc == "0":
+        carListReservation = Cars_Reservation.objects.filter(client=client, is_active=True)
+    else:
+        carListReservation = Cars_Reservation.objects.filter(
+            creator=pk, is_active=True, location=loc
+        )
+    carListReservationGroupBy = carListReservation.order_by("date_from")
+    serializer = CarsReservationSerializer(carListReservationGroupBy, many=True)
+    return Response(serializer.data)
 
 @api_view(["PUT"])
 @permission_classes([IsAuthenticated])
@@ -471,6 +489,7 @@ def deleteReservation(request, pk):
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def getReservationById(request, pk):
+    
     try:
         reservation = Cars_Reservation.objects.get(id=pk)
 

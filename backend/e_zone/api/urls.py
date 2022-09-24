@@ -90,6 +90,11 @@ urlpatterns = [
         name="list-reservation-car",
     ),
     path(
+        "reservation/list/user/car/<str:pk>/<str:loc>/",
+        views.listUserReservationCar,
+        name="list-user-reservation-car",
+    ),
+    path(
         "reservation/delete/<str:pk>/",
         views.deleteReservation,
         name="reservation-delete",

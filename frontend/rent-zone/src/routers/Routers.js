@@ -17,6 +17,7 @@ import OverallStatus from '../components/Admin/OverallStatus/OverallStatus'
 import VendorApplicationList from '../components/Admin/VendorAppllicationList/VendorApplicationList'
 import VendorDetails from '../pages/VendorDetails/VendorDetails'
 import UserProfile from '../pages/UserProfile'
+import ReservationDetals from '../pages/ReservationDetals'
 
 const Routers = () => {
   return (
@@ -31,6 +32,7 @@ const Routers = () => {
           <Route path ='blogs' element = {<Blog/>} />
           <Route path ='Blogs/:slug' element = {<BlogDetails/>} />
           <Route path ='account' element = {<UserProfile/>} />
+          <Route path ='account/reservations/:slug' element = {<ReservationDetals/>} />
           <Route path ='register-vendor' element = {<VendorRegPage/>} />   
           <Route path ='vendor' element = {<VendorPage/>}>
             

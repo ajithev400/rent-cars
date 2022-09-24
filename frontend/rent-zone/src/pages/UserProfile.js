@@ -1,16 +1,26 @@
 import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify';
 import axiosService from '../features/axios';
 import ProfileDetails from './ProfileDetails';
+import ResrvationCarsList from './ResrvationCarsList';
 
 
 const UserProfile = () => {
     const user = JSON.parse(localStorage.getItem("user"))
     const [profile, setProfile] = useState({})
+    const [reservedCar, setReservedCar] = useState([])
     const id = user.id
     useEffect(() => {
         axiosService.getUserProfile(id)
         .then((res)=>{
             setProfile(res.data)
+        })
+        axiosService.listReservationCars(id)
+        .then((res)=>{
+            setReservedCar(res.data)
+        })
+        .catch((res)=>{
+            toast.error(res.data)
         })
     }, [id])
     
@@ -76,133 +86,40 @@ const UserProfile = () => {
               </div>
 
               <div className="row gutters-sm">
-                <div className="col-sm-6 mb-3">
-                  <div className="card h-100">
-                    <div className="card-body">
-                      <h4 className="d-flex align-items-center mb-3"><i className="material-icons text-info mr-2">1  </i>Reservation</h4>
-                      
-                      
-                    <div className="row">
-                    <div className="col-sm-3">
-                    <h6 className="mb-0">Car</h6>
-                    </div>
-                    <div className="col-sm-9 text-secondary">
-                    Mercedes Benz XC90
-                    </div>
-                    </div>
-                    <div className="row">
-                    <div className="col-sm-3">
-                    <h6 className="mb-0">Model</h6>
-                    </div>
-                    <div className="col-sm-9 text-secondary">
-                    Model-2022
-                    </div>
-                    </div>
-                    <div className="row">
-                    <div className="col-sm-3">
-                    <h6 className="mb-0">Rent Date</h6>
-                    </div>
-                    <div className="col-sm-9 text-secondary">
-                    15-10-2022
-                    </div>
-                    </div>
-                    <div className="row">
-                    <div className="col-sm-3">
-                    <h6 className="mb-0">Location</h6>
-                    </div>
-                    <div className="col-sm-9 text-secondary">
-                    bengaluru marathahalli
-                    </div>
-                    </div>
-                    <div className="row">
-                    <div className="col-sm-3">
-                    <h6 className="mb-0">Rent</h6>
-                    </div>
-                    <div className="col-sm-9 text-secondary">
-                    2000/-
-                    </div>
-                    </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="col-sm-6 mb-3">
-                  <div className="card h-100">
-                    <div className="card-body">
-                      <h4 className="d-flex align-items-center mb-3"><i className="material-icons text-info mr-2">2  </i>Reservation</h4>
-                      
-                    <div className="row">
-                    <div className="col-sm-3">
-                    <h6 className="mb-0">Car</h6>
-                    </div>
-                    <div className="col-sm-9 text-secondary">
-                    Mercedes Benz XC90
-                    </div>
-                    </div>
-                    <div className="row">
-                    <div className="col-sm-3">
-                    <h6 className="mb-0">Model</h6>
-                    </div>
-                    <div className="col-sm-9 text-secondary">
-                    Model-2022
-                    </div>
-                    </div>
-                    <div className="row">
-                    <div className="col-sm-3">
-                    <h6 className="mb-0">Rent Date</h6>
-                    </div>
-                    <div className="col-sm-9 text-secondary">
-                    15-10-2022
-                    </div>
-                    </div>
-                    <div className="row">
-                    <div className="col-sm-3">
-                    <h6 className="mb-0">Location</h6>
-                    </div>
-                    <div className="col-sm-9 text-secondary">
-                    bengaluru marathahalli
-                    </div>
-                    </div>
-                    <div className="row">
-                    <div className="col-sm-3">
-                    <h6 className="mb-0">Rent</h6>
-                    </div>
-                    <div className="col-sm-9 text-secondary">
-                    2000/-
-                    </div>
-                    </div>
-                    </div>
-                  </div>
-                </div>
-                {/* <div className="col-sm-6 mb-3">
-                  <div className="card h-100">
-                    <div className="card-body">
-                      <h6 className="d-flex align-items-center mb-3"><i className="material-icons text-info mr-2">2</i>Reservation</h6>
-                      <small>Web Design</small>
-                      <div className="progress mb-3" style={{"height": "5px"}}>
-                        <div className="progress-bar bg-primary" role="progressbar" style={{"width": "80%", "ariaValuenow":"80", "ariaValuemin":"0", "ariaValuemax":"100"}}></div>
-                      </div>
-                      <small>Website Markup</small>
-                      <div className="progress mb-3" style={{"height": "5px"}}>
-                        <div className="progress-bar bg-primary" role="progressbar" style={{"width": "72%", "ariaValuenow":"72", "ariaValuemin":"0", "ariaValuemax":"100"}}></div>
-                      </div>
-                      <small>One Page</small>
-                      <div className="progress mb-3" style={{"height": "5px"}}>
-                        <div className="progress-bar bg-primary" role="progressbar" style={{"width": "89%", "ariaValuenow":"89", "ariaValuemin":"0", "ariaValuemax":"100"}}></div>
-                      </div>
-                      <small>Mobile Template</small>
-                      <div className="progress mb-3" style={{"height": "5px"}}>
-                        <div className="progress-bar bg-primary" role="progressbar" style={{"width": "55%", "ariaValuenow":"55", "ariaValuemin":"0", "ariaValuemax":"100"}}></div>
-                      </div>
-                      <small>Backend API</small>
-                      <div className="progress mb-3" style={{"height": "5px"}}>
-                        <div className="progress-bar bg-primary" role="progressbar" style={{"width": "66%", "ariaValuenow":"66", "ariaValuemin":"0", "ariaValuemax":"100"}}></div>
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
-              </div>
+              {reservedCar.map((item)=>[
+                
+              <ResrvationCarsList item={item} key={item.id}/>
+              ])}
+                
 
-
+                  {/* <div className="col-sm-6 mb-3">
+                    <div className="card h-100">
+                      <div className="card-body">
+                        <h6 className="d-flex align-items-center mb-3"><i className="material-icons text-info mr-2">2</i>Reservation</h6>
+                        <small>Web Design</small>
+                        <div className="progress mb-3" style={{"height": "5px"}}>
+                          <div className="progress-bar bg-primary" role="progressbar" style={{"width": "80%", "ariaValuenow":"80", "ariaValuemin":"0", "ariaValuemax":"100"}}></div>
+                        </div>
+                        <small>Website Markup</small>
+                        <div className="progress mb-3" style={{"height": "5px"}}>
+                          <div className="progress-bar bg-primary" role="progressbar" style={{"width": "72%", "ariaValuenow":"72", "ariaValuemin":"0", "ariaValuemax":"100"}}></div>
+                        </div>
+                        <small>One Page</small>
+                        <div className="progress mb-3" style={{"height": "5px"}}>
+                          <div className="progress-bar bg-primary" role="progressbar" style={{"width": "89%", "ariaValuenow":"89", "ariaValuemin":"0", "ariaValuemax":"100"}}></div>
+                        </div>
+                        <small>Mobile Template</small>
+                        <div className="progress mb-3" style={{"height": "5px"}}>
+                          <div className="progress-bar bg-primary" role="progressbar" style={{"width": "55%", "ariaValuenow":"55", "ariaValuemin":"0", "ariaValuemax":"100"}}></div>
+                        </div>
+                        <small>Backend API</small>
+                        <div className="progress mb-3" style={{"height": "5px"}}>
+                          <div className="progress-bar bg-primary" role="progressbar" style={{"width": "66%", "ariaValuenow":"66", "ariaValuemin":"0", "ariaValuemax":"100"}}></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div> */}
+    </div>
 
             </div>
           </div>
