@@ -25,7 +25,7 @@ const CarDetails = () => {
         <Container>
           <Row>
             <Col lg="6">
-              <img src={singleCarItem.image} alt="" className="w-100" />
+              <img src={singleCarItem.image} alt={singleCarItem.image} className="w-100" />
             </Col>
 
             <Col lg="6">

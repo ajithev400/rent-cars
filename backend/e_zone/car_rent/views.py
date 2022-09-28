@@ -481,7 +481,7 @@ def listUserReservationCar(request, pk, loc):
     serializer = CarsReservationSerializer(carListReservationGroupBy, many=True)
     return Response(serializer.data)
 
-@api_view(["PUT"])
+@api_view(["DELETE"])
 @permission_classes([IsAuthenticated])
 def deleteReservation(request, pk):
     data = request.data
@@ -722,7 +722,7 @@ def createRentCar(request):
         if date_obj_start > (i.date_from - extension) and date_obj_start < (
             i.date_to + extension
         ):
-            return Response("date range exists for dataStart")
+            return Response("date range exists for date Start")
         if date_obj_end > (i.date_from - extension) and date_obj_end < (
             i.date_to + extension
         ):

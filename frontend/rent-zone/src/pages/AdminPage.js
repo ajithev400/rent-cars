@@ -5,7 +5,6 @@ import AdminNavBar from '../components/Admin/AdminNav/AdminNavBar'
 import { logout } from '../features/auth/authSlice'
 
 
-
 const AdminPage = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -18,7 +17,7 @@ const AdminPage = () => {
   }
   return (
     <>
-    <div className="container-fluid">
+    <div className="container-fluid" style={{"background":"#eee;"}}>
         <div className="row">
           <div className="col">
           <AdminNavBar/>

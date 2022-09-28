@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axiosService from '../../../features/axios'
 import '../../../styles/Admin/adminTableCss.css'
 
 const VendorList = () => {
+    const navigate = useNavigate()
     const [vendors, setVendors] = useState([])
     useEffect(() => {
         axiosService.getallVendors().then((res)=>{
@@ -39,7 +40,7 @@ const VendorList = () => {
                             vendors.map((items)=>{
                                 return(
                                 <tr key={items.id}>
-                                    <td >
+                                    <td onClick={()=> navigate(`/admin/vendor/${items.id}`)} >
                                         <img src={items.image} alt="img"/>
                                         <a href="#!" className="user-link">{items.vendor_name}.</a>
                                         <span className="user-subhead">{items.GST_number}</span>
