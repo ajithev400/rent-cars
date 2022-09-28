@@ -1,3 +1,4 @@
+from dataclasses import fields
 from rest_framework import serializers
 from .models import *
 from django.utils import timezone
@@ -57,6 +58,10 @@ class CarsSerializerWithMainLocation(serializers.ModelSerializer):
             "main_location",
         ]
 
+class CarDocumetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CarsDocument
+        fields = "__all__"
 
 class CarsReservationSerializer(serializers.ModelSerializer):
     start_year = serializers.SerializerMethodField(read_only=True)

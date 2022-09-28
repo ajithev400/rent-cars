@@ -21,8 +21,9 @@ class VendorViewSet(viewsets.ModelViewSet):
         user.save()
         serializer.save(owner = self.request.user, 
         email = user.email,       
-        is_active = False, 
+        is_active = True, 
         is_verified = False)
+
 
     # @action(detail=True,methods=['POST']) 
     # def to_vendor(self,request,pk):

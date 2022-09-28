@@ -1,5 +1,7 @@
 from django.urls import path
 from rest_framework.routers import DefaultRouter
+
+from car_rent.views import CarDocumentViewSet
 from .views import BlacklistTokenUpdateView
 from users.views import getRoutes, MyTokenObtainPairView,RegisterView,Verify_otpView,RetriveUserView,ProfileViewSet,UserViewSet
 from store.views import VehicleViewSet
@@ -24,7 +26,8 @@ urlpatterns = [
     # cars
     # path("cars/image/upload/", views.carUploadImage, name="car-upload-image"),
     # path("new/cars/upload/", views.newCarUploadImage, name="new-car-upload-image"),
-    # path("cars/", views.getCars, name="cars-list"),
+    path("cars/", views.getCars, name="cars-list"),
+    path("cars/vendor/<str:pk>/", views.getCarsbyOwnerId, name="cars-list"),
     # path("car/create/", views.createCar, name="create-car"),
     # path("car/<str:pk>/", views.getCarById, name="get-car-by-id"),
     # path("car/update/<str:pk>/", views.updateCar, name="car-update"),
@@ -130,4 +133,5 @@ router.register(r'profile', ProfileViewSet, basename='profile' )
 router.register(r'vehicle',VehicleViewSet,basename='vechicle')
 router.register(r'vendor',VendorViewSet,basename='vendor')
 router.register(r'order',OrderViewSet,basename='Order')
+router.register(r'car-documents',CarDocumentViewSet,basename='car_document')
 urlpatterns=urlpatterns+router.urls

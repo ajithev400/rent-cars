@@ -36,7 +36,7 @@ const ResrvationCarsList = ({item}) => {
           <h6 className="mb-0">Rent Date</h6>
           </div>
           <div className="col-sm-9 text-secondary">
-          {item.date_from}
+          {item.date_from.slice(0,10)}
           </div>
           </div>
           <div className="row">

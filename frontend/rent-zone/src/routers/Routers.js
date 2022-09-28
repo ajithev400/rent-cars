@@ -9,7 +9,7 @@ import NotFound from '../pages/NotFound'
 import RegisterPage from '../pages/RegisterPage'
 import LoginPage from '../pages/LoginPage'
 import VendorRegPage from '../pages/VendorRegPage'
-import Base from '../components/Layout.js/Base'
+import Base from '../components/Layout/Base'
 import VendorPage from '../pages/VendorPage'
 import AdminPage from '../pages/AdminPage'
 import VehicleList from '../pages/VehicleList'
@@ -18,6 +18,8 @@ import VendorApplicationList from '../components/Admin/VendorAppllicationList/Ve
 import VendorDetails from '../pages/VendorDetails/VendorDetails'
 import UserProfile from '../pages/UserProfile'
 import ReservationDetals from '../pages/ReservationDetals'
+import VendorList from '../components/Admin/VendorList/VendorList'
+import UserList from '../components/Admin/UserList/UserList'
 
 const Routers = () => {
   return (
@@ -41,7 +43,9 @@ const Routers = () => {
             <Route index element= {<OverallStatus/>} />
             <Route path ='vehicles' element= {<VehicleList/>} />
             <Route path ='new-applications' element= {<VendorApplicationList/>} />
-            <Route path ='new-applications/:slug' element= {<VendorDetails/>} />
+            <Route path ='vendor/:slug' element= {<VendorDetails/>} />
+            <Route path ='vendor-list' element = {<VendorList/>} />
+            <Route path ='user-list' element = {<UserList/>} />
           </Route>   
         </Route>
         <Route path ='*' element = {<NotFound/>} />

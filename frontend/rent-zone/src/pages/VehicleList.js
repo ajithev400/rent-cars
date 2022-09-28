@@ -10,11 +10,11 @@ const VehicleList = () => {
     useEffect(() => {
         axiosService.getVehicles(searchData)
         .then((res)=>{
-          setCarData(res.data)
+          setCarData(res.data.results)
         })
         // console.log('res:',axiosService.getVehicles());
       }, [searchData])
-
+      console.log(carData);
   return (
     <>
     <div>VehicleList</div>
@@ -32,8 +32,8 @@ const VehicleList = () => {
             {carData.map((item)=> (
 
             <tr key={item.id}>
-                <td>{item.vehicle_name}</td>
-                <td>Content 10</td>
+                <td>{item.name}</td>
+                <td>{item.creator}</td>
                 <td>{item.model}</td>
                 <td>{item.speeed}</td>
                 {item.is_available?

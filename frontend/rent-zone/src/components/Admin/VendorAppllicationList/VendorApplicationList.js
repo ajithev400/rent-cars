@@ -9,7 +9,8 @@ const VendorApplicationList = () => {
     useEffect(() => {
         axiosService.getVendorApplication(searchData)
         .then((res)=>{
-            setVendorData(res.data.results)
+            const data = res.data.results.filter((item)=>item.is_verified===false)
+            setVendorData(data)
             
         })
     }, [searchData])
@@ -50,7 +51,7 @@ const VendorApplicationList = () => {
                     </td>}
                 <td>
                 
-                <button onClick={()=>navigate(`${item.id}`)} className="btn btn-warning">open</button>
+                <button onClick={()=>navigate(`/admin/vendor/${item.id}`)} className="btn btn-warning">open</button>
                 </td>
             </tr>
 

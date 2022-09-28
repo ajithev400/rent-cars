@@ -1,144 +1,133 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import axiosService from "../../features/axios";
+
+// const url = process.env.REACT_APP_API_URL
+const url = process.env.REACT_APP_API_URL
+
 
 const VendorDetails = () => {
   const para = useParams();
   const vendorId = para.slug;
   const [vendor, setVendor] = useState({});
+  const [cars, setCars] = useState([])
   useEffect(() => {
     axiosService.getSingleVendor(vendorId).then((res) => {
       setVendor(res.data);
     });
+    axiosService.getCarListWithVendorId(vendorId).then((res)=>{
+      setCars(res.data)
+    })
+    .catch((res)=>{
+      toast.error(res.data)
+    })
   }, [vendorId]);
 
+  const handleOnClick = ()=>{
+    axiosService.approveVendor(vendor.id).then((res)=>{
+      setVendor(res.data)
+    })
+  }
+
+  
+  console.log(vendor);
+  console.log("Cars",cars);
+  console.log(url);
   return (
     <>
-      <div class="container rounded bg-white mt-5 mb-5">
-        <div class="row">
-          <div class="col-md-3 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-              <img
-                class="rounded-circle mt-5"
-                width="150px"
-                src={vendor.image}
-                alt= {vendor.image}
-              />
-              <span class="font-weight-bold">{vendor.vendor_name}</span>
-              <span class="text-black-50">{vendor.email}</span>
-              <span> </span>
-            </div>
-          </div>
-          <div class="col-md-5 border-right">
-            <div class="p-3 py-5">
-              <div class="d-flex justify-content-between align-items-center mb-3">
-                <h4 class="text-right">Profile Details</h4>
-              </div>
-              
-              <div class="row mt-2">
-                <div class="col-md-12 ">
-                  <div className="d-flex">
-                    <label class="labels">Vendor Name:</label>
-                    <h5 className="ms-5">{vendor.vendor_name}</h5>
-                  </div>
-                </div>
-              </div>
-              <div class="row mt-3">
-                <div class="col-md-12">
-                  <div className="d-flex">
-                    <label class="labels">Mobile Number:</label>
-                    <h5  className="ms-4">{vendor.mobile}</h5>
-                  </div>
-                </div>
 
-                <div class="col-md-12">
-                  <div className="d-flex">
-                    <label class="labels">Email:</label>
-                    <h5 className="ms-5">{vendor.email}</h5>
-                  </div>
+    <div className="container">
+        <div className="row">
+            <div className="col-md-3">
+                <div className="osahan-account-page-left shadow-sm bg-white h-100">
+                    <div className="border-bottom p-4">
+                        <div className="osahan-user text-center">
+                            <div className="osahan-user-media">
+                                <img 
+                                className="mb-3 rounded-pill shadow-sm mt-1" 
+                                src={vendor.image} 
+                                alt={vendor.image}
+                                width="150px"
+                                
+                                />
+                                <div className="osahan-user-media-body">
+                                    <h6 className="mb-2">{vendor.vendor_name}</h6>
+                                    <p className="mb-1">{vendor.mobile}</p>
+                                    <p>{vendor.email}</p>
+                                    <p className="mb-0 text-black font-weight-bold"><a className="text-primary mr-3" data-toggle="modal" data-target="#edit-profile-modal" href="#!"><i className="icofont-ui-edit"></i> EDIT</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <ul className="nav nav-tabs flex-column border-0 pt-4 pl-4 pb-4" id="myTab" role="tablist">
+                        <li className="nav-item">
+                            <a className="nav-link" id="favourites-tab" data-toggle="tab" href="#favourites" role="tab" aria-controls="favourites" aria-selected="false"><i className="icofont-heart"></i> Products</a>
+                        </li>
+                    </ul>
                 </div>
-                <div class="col-md-12">
-                 <div className="d-flex">
-                    <label class="labels">GST Number:</label>
-                    <h5 className="ms-3">{vendor.GST_number}</h5>
-                 </div>
-                </div>
-                {/* <div class="col-md-12">
-                  <label class="labels">Address Line 1</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="enter address line 1"
-                    value=""
-                  />
-                </div> */}
-                {/* <div class="col-md-12">
-                  <label class="labels">State</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="enter address line 2"
-                    value=""
-                  />
-                </div>
-                <div class="col-md-12">
-                  <label class="labels">Area</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="enter address line 2"
-                    value=""
-                  />
-                </div>
-                <div class="col-md-12">
-                  <label class="labels">Email ID</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="enter email id"
-                    value=""
-                  />
-                </div>
-                <div class="col-md-12">
-                  <label class="labels">Education</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="education"
-                    value=""
-                  />
-                </div>
-              </div>
-              <div class="row mt-3">
-                <div class="col-md-6">
-                  <label class="labels">Country</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="country"
-                    value=""
-                  />
-                </div>
-                <div class="col-md-6">
-                  <label class="labels">State/Region</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    value=""
-                    placeholder="state"
-                  />
-                </div> */}
-              </div>
-              <div class="mt-5 text-center">
-                <button class="btn btn-primary profile-button" type="button">
-                  Approve as Vendor
-                </button>
-              </div>
             </div>
-          </div>
-          <div class="col-md-4"></div>
+            <div className="col-md-9">
+                <div className="osahan-account-page-right shadow-sm bg-white p-4 h-100">
+                    <div className="tab-content" id="myTabContent">
+                        <div className="tab-pane fade  active show" id="favourites" role="tabpanel" aria-labelledby="favourites-tab">
+                            <h4 className="font-weight-bold mt-0 mb-4">Cars</h4>
+                            <div className="row">
+
+                            
+                              {
+                                cars[0]?
+                                cars.map((item)=>{
+                                  return(
+
+                                  <div className="col-md-4 col-sm-6 mb-4 pb-2" key={item.id} >
+                                      <div className="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
+                                          <div className="list-card-image">
+                                              <div className="star position-absolute"><span className="badge badge-success"><i className="icofont-star"></i> 3.1 (300+)</span></div>
+                                              <div className="favourite-heart text-danger position-absolute"><a href="#!"><i className="icofont-heart"></i></a></div>
+                                              <div className="member-plan position-absolute"><span className="badge badge-dark">Promoted</span></div>
+                                              <a href="#!">
+                                                  <img src={url+item.image} alt="img" className="img-fluid item-img"/>
+                                              </a>
+                                          </div>
+                                          <div className="p-3 position-relative">
+                                              <div className="list-card-body">
+                                                  <h6 className="mb-1"><a href="#!" className="text-black">{item.name}
+                                                  </a>
+                                                </h6>
+                                                  <p className="text-gray mb-3">{item.code_registration}, {item.model}, {item.transmission}</p>
+                                                  <p className="text-gray mb-3 time"><span className="bg-light text-dark rounded-sm pl-2 pb-1 pt-1 pr-2"><i className="icofont-wall-clock"></i> For 1 Day</span> <span className="float-right text-black-50"> ₹{item.price}</span></p>
+                                              </div>
+                                              <div className="list-card-badge">
+                                                  <h6 className="mb-1"><a href="#!" className="text-black">Download Document</a></h6>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  )
+                                })
+
+                                :null
+                              }
+                                
+                                <div className="col-md-12 text-center load-more">
+                                  {
+                                    vendor.is_verified?
+                                    <button className="btn btn-primary" type="button" disabled="">
+                                        <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Block Vendor
+                                    </button>:
+                                    <button className="btn btn-primary" type="button" onClick={handleOnClick}>
+                                        <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Approve Vendor
+                                    </button>
+                                  }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+    </div>
     </>
   );
 };

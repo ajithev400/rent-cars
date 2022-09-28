@@ -1,11 +1,8 @@
-from http import client
-from urllib import request
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, permissions,viewsets
 from rest_framework.views import APIView
-from rest_framework.viewsets import ViewSet
 from .models import *
 from .serializers import *
 from datetime import datetime
@@ -99,12 +96,26 @@ def newLocationUploadImage(request):
 #     queryset = Cars.objects.all()
 #     serializers_class = CarsRentsSerializer()
 
-# @api_view(["GET"])
-# @permission_classes([IsAuthenticated])
-# def getCars(request):
-#     cars = Cars.objects.all().order_by("name")
-#     serializer = CarsSerializer(cars, many=True)
-#     return Response(serializer.data)
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def getCars(request):
+    cars = Cars.objects.all().order_by("name")
+    serializer = CarsSerializer(cars, many=True)
+    return Response(serializer.data)
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def getCarsbyOwnerId(request,pk):
+    
+    try:
+        vendor = Vendor.objects.get(id=pk)
+    except:
+        
+        return Response({"message":"Vendor not exist"},status=status.HTTP_400_BAD_REQUEST)
+    
+    cars = Cars.objects.filter(owner=vendor).order_by("name")
+    serializer = CarsSerializer(cars, many=True)
+    return Response(serializer.data)
 
 
 # @api_view(["POST"])
@@ -699,7 +710,7 @@ def createRentCar(request):
         )
 
     obj_rents = Cars_Rents.objects.filter(id_cars=data["id_car"], is_active=True)
-
+    print("car_resObj",obj_reservations)
     for i in obj_reservations:
         if data["location"] == i.location:
             extension = timedelta(milliseconds=int(data["setCarRent"]))
@@ -884,3 +895,11 @@ def carUpdateRent(request, pk):
     except:
         message = {"detail": "server error"}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
+class CarDocumentViewSet(viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = CarDocumetSerializer
+    queryset = CarsDocument.objects.all()
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)

@@ -60,6 +60,13 @@ class Cars(models.Model):
     def __str__(self):
         return self.name
 
+class CarsDocument(models.Model):
+    car_id = models.CharField(max_length=10)
+    document = models.FileField(upload_to='vendor/vehicles/documents')
+    cars = models.ForeignKey(Cars,on_delete=models.CASCADE)
+    owner = models.ForeignKey(Account,on_delete=models.CASCADE)
+    vendor_id = models.ForeignKey(Vendor,on_delete=models.CASCADE)
+
 
 class Cars_ARC(models.Model):
     id_car = models.CharField(max_length=5)
