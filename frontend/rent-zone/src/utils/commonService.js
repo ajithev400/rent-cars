@@ -43,6 +43,7 @@ export const isRouteRoleMatchs = (role)=>{
 
 export const isPathAllowed=(pathname)=>{
     const role = getRoleForPath(pathname)
+    // console.log(role);
     return isRouteRoleMatchs(role)
 }
 

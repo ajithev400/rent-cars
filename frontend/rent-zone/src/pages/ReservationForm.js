@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import {useNavigate} from 'react-router-dom'
 import { Col, Form, FormGroup } from 'reactstrap'
 import masterCard from "../assets/all-images/master-card.jpg";
 import paypal from "../assets/all-images/paypal.jpg";
@@ -10,14 +11,14 @@ import { toast } from 'react-toastify';
 
 const ReservationForm = ({singleCar}) => {
     const userdata = JSON.parse(localStorage.getItem('user'))
-    
+    const navigate = useNavigate()
     const date = new Date()
     const miliSec = date.getTime()
     var hr = date.getHours()
     var min = date.getMinutes()
     var sec = date.getSeconds()    
     const currentTime = hr +":"+min+":"+sec
-   
+    const [razorpay, setRazorpay] = useState(false)
     const [formData, setFormData] = useState({
         name:userdata.first_name,
         dateFrom:'',
@@ -52,15 +53,32 @@ const ReservationForm = ({singleCar}) => {
     const handleTimeChange = (e)=>{
         setFormData({...formData,[e.target.name]:miliSec})
     }
+
+    const handlePaymentChange = ()=>{
+        setRazorpay(!razorpay)
+    }
+    console.log("razorpay:",razorpay);
+    console.log("formData",formData);
+
     const submitHandler = (e) => {
         e.preventDefault();
-        axiosService.createCarReservation(formData)
-        .then((res)=>{
-          toast.success(res.data)
-        })
-        .catch((res)=>{
-            toast.error(res.message)
-        })
+        if(!razorpay){
+            toast.error('choose a payment method')
+        }else{
+
+            axiosService.createCarReservation(formData)
+            .then((res)=>{
+                
+              toast.success(res.message)
+              localStorage.setItem('reservationData',JSON.stringify(formData))
+              localStorage.setItem('reservationId',JSON.stringify(res.data))
+              navigate('payment/')
+            })
+            .catch((res)=>{
+                toast.error(res.message)
+            })
+            
+        }
       };
     
     
@@ -190,15 +208,15 @@ const ReservationForm = ({singleCar}) => {
                 {/* <PaymentMethod/> */}
                 <div className="payment mt-3 d-flex align-items-center justify-content-between">
                 <label htmlFor="" className="d-flex align-items-center gap-2">
-                <input type="radio" /> Master Card
+                <input type="checkbox"  name= 'mastar-card' /> Master Card
                 </label>
 
-                <img src={masterCard} alt="" />
+                <img src={masterCard} alt="master-card" />
                 </div>
 
                 <div className="payment mt-3 d-flex align-items-center justify-content-between">
                     <label htmlFor="" className="d-flex align-items-center gap-2">
-                    <input type="radio" /> Razorpay
+                    <input type="checkbox" checked= {razorpay} value={razorpay} name= 'razorpay' onChange={handlePaymentChange} /> Razorpay
                     </label>
 
                     <img src={paypal} alt="" />

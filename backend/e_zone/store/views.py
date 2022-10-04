@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework import viewsets, filters, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from vendor.models import Vendor
 from order.models import Rent
 from .permissions import IsOwnerOrReadOnly
 from order.serializer import RentSerializer
@@ -19,5 +20,6 @@ class VehicleViewSet(viewsets.ModelViewSet):
     max_paginate_by = 20
 
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        vendor = Vendor.objects.get(id=self.request.user.id)
+        serializer.save(owner=vendor)
     

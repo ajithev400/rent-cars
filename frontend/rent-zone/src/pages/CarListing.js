@@ -46,7 +46,7 @@ const CarListing = () => {
                 </span>
 
                 <select onChange={(e)=>setSort(e.target.value)}>
-                  <option value={null}>Select</option>
+                  <option valuwee={null}>Select</option>
                   <option  value="low">Low to High</option>
                   <option  value="high">High to Low</option>
                 </select>

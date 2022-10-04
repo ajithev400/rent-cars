@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import axiosService from "../../features/axios";
 
@@ -62,7 +62,11 @@ const VendorDetails = () => {
                     </div>
                     <ul className="nav nav-tabs flex-column border-0 pt-4 pl-4 pb-4" id="myTab" role="tablist">
                         <li className="nav-item">
-                            <a className="nav-link" id="favourites-tab" data-toggle="tab" href="#favourites" role="tab" aria-controls="favourites" aria-selected="false"><i className="icofont-heart"></i> Products</a>
+                            <a className="nav-link" id="favourites-tab" data-toggle="tab" href="#favourites" role="tab" aria-controls="favourites" aria-selected="false">Products</a>
+                            <a className="nav-link" id="favourites-tab" data-toggle="tab" href="#favourites" role="tab" aria-controls="favourites" aria-selected="false">Profile</a>
+                            <a className="nav-link" id="favourites-tab" data-toggle="tab" href="#favourites" role="tab" aria-controls="favourites" aria-selected="false"> BLOCK Vendor</a>
+                            <a className="nav-link" id="favourites-tab" data-toggle="tab" href="#favourites" role="tab" aria-controls="favourites" aria-selected="false"> Repote</a>
+
                         </li>
                     </ul>
                 </div>
@@ -81,14 +85,14 @@ const VendorDetails = () => {
                                   return(
 
                                   <div className="col-md-4 col-sm-6 mb-4 pb-2" key={item.id} >
-                                      <div className="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
-                                          <div className="list-card-image">
+                                      <div  className="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm" >
+                                          <div className="list-card-image" >
                                               <div className="star position-absolute"><span className="badge badge-success"><i className="icofont-star"></i> 3.1 (300+)</span></div>
                                               <div className="favourite-heart text-danger position-absolute"><a href="#!"><i className="icofont-heart"></i></a></div>
                                               <div className="member-plan position-absolute"><span className="badge badge-dark">Promoted</span></div>
-                                              <a href="#!">
+                                              <Link to={`/admin/vendor-car/${item.slug}`}>
                                                   <img src={url+item.image} alt="img" className="img-fluid item-img"/>
-                                              </a>
+                                              </Link>
                                           </div>
                                           <div className="p-3 position-relative">
                                               <div className="list-card-body">
@@ -113,9 +117,11 @@ const VendorDetails = () => {
                                 <div className="col-md-12 text-center load-more">
                                   {
                                     vendor.is_verified?
-                                    <button className="btn btn-primary" type="button" disabled="">
-                                        <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Block Vendor
-                                    </button>:
+                                    // <button className="btn btn-primary" type="button" disabled="">
+                                    //     <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Block Vendor
+                                    // </button>
+                                    null
+                                    :
                                     <button className="btn btn-primary" type="button" onClick={handleOnClick}>
                                         <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Approve Vendor
                                     </button>

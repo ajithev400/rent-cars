@@ -2,6 +2,10 @@ import axios from 'axios'
 const API_URL = process.env.REACT_APP_API_URL
 const token = JSON.parse(localStorage.getItem('jwtToken'))
 
+const instance = axios.create({
+    baseURL:API_URL
+})
+
 const getVehicles = (data) =>{ return axios.get(API_URL+`/api/vehicle/?search=${data}`)
     .catch((res)=>{
         console.log(res);
@@ -66,6 +70,17 @@ const getSingleVendor = (data)=>{
     })
 }
 
+const searchVendor = (email) =>{
+    return axios.get(API_URL+`/api/vendor/?search=${email}`,{
+        headers:{
+            'Authorization':`Bearer ${token.access}`,
+        }
+    })
+    .catch((err)=>{
+        console.log("Error:",err);
+    })
+}
+
 const findCars = (formData) =>{ 
     console.log("axios formData",formData);
     return axios.post(API_URL+'/api/filter/reservation/',formData,{
@@ -127,6 +142,24 @@ const approveVendor =(id)=>{
     })
 } 
 
+const reservationPayment = (formData)=>{
+    return axios.post(API_URL+`/api/reservation/payment/`,formData,{
+        headers:{           
+            'Authorization': `Bearer ${token.access}`,
+            'Content-Type':'application/json'
+        }
+    })
+}
+
+const handlePaymentSuccess = (formData)=>{
+    return axios.post(API_URL+'/api/reservation/payment/success/',formData,{
+        headers:{           
+            'Authorization': `Bearer ${token.access}`,
+            'Content-Type':'application/json'
+        }
+    })
+}
+
 const axiosService = {
     getVehicles,
     getSingleCar,
@@ -135,6 +168,7 @@ const axiosService = {
     getallVendors,
     getVendorApplication,
     getSingleVendor,
+    searchVendor,
     findCars,
     getUserProfile,
     createCarReservation,
@@ -142,6 +176,8 @@ const axiosService = {
     getReservationDetails,
     getCarListWithVendorId,
     approveVendor,
+    reservationPayment,
+    handlePaymentSuccess,
 }
 
 export default axiosService

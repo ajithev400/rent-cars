@@ -17,7 +17,7 @@ class VendorViewSet(viewsets.ModelViewSet):
     
     def perform_create(self, serializer):
         user = self.request.user
-        user.role = "Vender"
+        user.role = "Vendor"
         user.save()
         serializer.save(owner = self.request.user, 
         email = user.email,       

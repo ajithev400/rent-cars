@@ -31,31 +31,38 @@ const VendorApplicationList = () => {
                 <th>More</th>
             </tr>
             </thead>
-            {vendorData.map((item)=>(
-            <tr key={item.id}>
-                <td>{item.vendor_name}</td>
-                <td>{item.email}</td>
-                <td>{item.mobile}</td>
-                <td>{item.GST_number}</td>
-                {item.is_verified?
+            {vendorData[0]!==null?
+            vendorData.map((item)=>(
+                <tr key={item.id}>
+                    <td>{item.vendor_name}</td>
+                    <td>{item.email}</td>
+                    <td>{item.mobile}</td>
+                    <td>{item.GST_number}</td>
+                    {item.is_verified?
+                    <td>
+                        <h5 style={{"color":"green"}}>Verified</h5>
+                    </td>:<td>
+                    <h5 style={{"color":"red"}}>Not Verified</h5>
+                        </td>}
+                        {item.is_active?
+                    <td>
+                        <h5 style={{"color":"green"}}>Active</h5>
+                    </td>:<td>
+                    <h5 style={{"color":"red"}}>Blocked</h5>
+                        </td>}
+                    <td>
+                    
+                    <button onClick={()=>navigate(`/admin/vendor/${item.id}`)} className="btn btn-warning">open</button>
+                    </td>
+                </tr>
+    
+                ))
+                :
                 <td>
-                    <h5 style={{"color":"green"}}>Verified</h5>
-                </td>:<td>
-                <h5 style={{"color":"red"}}>Not Verified</h5>
-                    </td>}
-                    {item.is_active?
-                <td>
-                    <h5 style={{"color":"green"}}>Active</h5>
-                </td>:<td>
-                <h5 style={{"color":"red"}}>Blocked</h5>
-                    </td>}
-                <td>
-                
-                <button onClick={()=>navigate(`/admin/vendor/${item.id}`)} className="btn btn-warning">open</button>
+                    <h5 style={{"color":"green"}} >No new Applications</h5>
                 </td>
-            </tr>
-
-            ))}
+            }
+            
             
         </table>
     </div>

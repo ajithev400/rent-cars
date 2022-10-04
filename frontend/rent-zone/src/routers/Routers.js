@@ -20,7 +20,10 @@ import UserProfile from '../pages/UserProfile'
 import ReservationDetals from '../pages/ReservationDetals'
 import VendorList from '../components/Admin/VendorList/VendorList'
 import UserList from '../components/Admin/UserList/UserList'
-
+import SingleCarExtentedDetails from '../pages/VendorDetails/SingleCarExtentedDetails'
+import Payment from '../pages/Payment'
+import CarAddingForm from '../pages/CarAddingForm'
+import Vendor from '../components/UI/Vendor'
 
 const Routers = () => {
   return (
@@ -36,8 +39,11 @@ const Routers = () => {
           <Route path ='Blogs/:slug' element = {<BlogDetails/>} />
           <Route path ='account' element = {<UserProfile/>} />
           <Route path ='account/reservations/:slug' element = {<ReservationDetals/>} />
-          <Route path ='register-vendor' element = {<VendorRegPage/>} />   
-          <Route path ='vendor' element = {<VendorPage/>}>
+          <Route path ='register-vendor' element = {<VendorRegPage/>} />  
+          <Route path='cars/:slug/payment' element = {<Payment/>} /> 
+          <Route path ='vendor-dashboard' element = {<Vendor/>}>
+            <Route index element={<VendorPage/>} />
+            <Route path='add-cars' element= {<CarAddingForm/>} />
             
             </Route>   
           <Route path ='admin' element = {<AdminPage/>}>
@@ -46,6 +52,7 @@ const Routers = () => {
             <Route path ='new-applications' element= {<VendorApplicationList/>} />
             <Route path ='vendor/:slug' element= {<VendorDetails/>} />
             <Route path ='vendor-list' element = {<VendorList/>} />
+            <Route path = 'vendor-car/:slug' element = {<SingleCarExtentedDetails/>} />
             <Route path ='user-list' element = {<UserList/>} />
           </Route>   
         </Route>

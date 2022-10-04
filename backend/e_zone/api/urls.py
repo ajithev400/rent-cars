@@ -8,6 +8,7 @@ from store.views import VehicleViewSet
 from vendor.views import VendorViewSet
 from order.views import OrderViewSet
 from car_rent import views
+from order.views import start_payment,handle_payment_success
 from rest_framework_simplejwt.views import (
     TokenRefreshView,TokenVerifyView
 )
@@ -123,6 +124,8 @@ urlpatterns = [
         name="get-rent-details-by-car-id",
     ),
     path("rent/update/<str:pk>/", views.carUpdateRent, name="car-update-rent"),
+    path("reservation/payment/",start_payment, name = 'reservation-pay'),
+    path("reservation/payment/success/",handle_payment_success, name="handle-payment-success"),
     
 ]
 router = DefaultRouter()

@@ -2,6 +2,7 @@ from django.db import models
 from accounts.models import Account
 from vendor.models import Vendor
 from store.models import Vehicles
+from car_rent.models import Cars,Cars_Reservation
 # Create your models here.
 
 STATUS = (
@@ -27,8 +28,9 @@ class Payment(models.Model):
 
 class Rent(models.Model):
     # reg_number = models.CharField(max_length=20)
-    vehicle = models.ForeignKey(Vehicles,on_delete=models.CASCADE,blank=True,null=True)
+    vehicle = models.ForeignKey(Cars,on_delete=models.CASCADE,blank=True,null=True)
     customer = models.ForeignKey(Account,on_delete=models.CASCADE,blank=True,null=True)
+    reservation_id = models.ForeignKey(Cars_Reservation, on_delete = models.CASCADE,blank=True,null=True)
     order_number = models.CharField(max_length=50,blank=True,null=True)
     payment = models.ForeignKey(Payment, on_delete=models.CASCADE,blank=True,null=True)
     first_name = models.CharField(max_length=50,blank=True,null=True)

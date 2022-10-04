@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from accounts.models import Account
 from vendor.models import Vendor
@@ -12,6 +13,15 @@ TRANSMISSION = (
     ("Manual Transmission","Manual Transmission"),
     ("Automatic","Automatic")
 )
+
+STATUS = (
+    ("New", "New"),
+    ("Placed", "Placed"),
+    ("Piked", "Piked"),
+    ("Return", "Return"),
+    ("Canceled", "Canceled"),
+)
+
 
 class Locations(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -106,6 +116,10 @@ class Cars_Reservation(models.Model):
         on_delete=models.SET_NULL,
         null=True,
     )
+    price = models.CharField(max_length=255,null=True, blank=True)
+    is_payed = models.BooleanField(default=False)
+    status = models.CharField(choices=STATUS, max_length=20, default="New")
+    total_price = models.CharField(max_length=255,null=True, blank=True)
     creator = models.CharField(max_length=255)
     owner = models.ForeignKey(Vendor, on_delete= models.CASCADE, blank=True, null=True)
     date_of_change = models.DateTimeField(blank=True, null=True)

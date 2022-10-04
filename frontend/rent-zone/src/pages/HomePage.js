@@ -32,7 +32,7 @@ const HomePage = () => {
   if(userRole === 'Admin'){
     navigate('/admin')
   } else if(userRole === 'Vendor'){
-    navigate('/vendor')
+    navigate('/vendor-dashboard')
   }
   
   
