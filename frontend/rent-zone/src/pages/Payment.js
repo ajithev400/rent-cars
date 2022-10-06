@@ -5,6 +5,7 @@ import axiosService from '../features/axios';
 const  API_URL = process.env.REACT_APP_API_URL
 const token = JSON.parse(localStorage.getItem('jwtToken'))
 console.log(API_URL);
+
 const Payment = () => {
   const {slug} = useParams()
   console.log("params:",slug);
@@ -89,6 +90,7 @@ const Payment = () => {
 
   const showRazorpay = async () =>{
     const res = await loadScript()
+
     const data = await axiosService.reservationPayment(formData)
     .then((res)=>{
         console.log("res",res);
@@ -111,9 +113,9 @@ const Payment = () => {
             handlePaymentSucess(response)
         },
         prefill: {
-            name: "User's name",
-            email: "User's email",
-            contact: "User's phone",
+            name: reservationData.name,
+            email: reservationData.email,
+            contact: reservationData.phone,
           },
           notes: {
             address: "Razorpay Corporate Office",

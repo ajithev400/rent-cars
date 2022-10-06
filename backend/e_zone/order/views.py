@@ -61,7 +61,8 @@ def start_payment(request):
     name = request.data['name']
     car_id = request.data['car_id']
     reservation_id = request.data['res_id']
-    client = razorpay.Client(auth=(settings.RAZOR_KEY_ID,settings.RAZOR_KEY_SECRET))
+    # client = razorpay.Client(auth=(settings.RAZOR_KEY_ID,settings.RAZOR_KEY_SECRET))
+    client = razorpay.Client(auth=('rzp_test_TxQpeoYAlaoExd','oZT8rkCHhQIVafkP24miJhkQ'))
 
     # create razorpay order
     # the amount will come in 'paise' that means if we pass 50 amount will become
@@ -102,7 +103,9 @@ def handle_payment_success(request):
 
     reservation_id = request.data['res_id']
     print(reservation_id)
-    res = json.load(request.data['response'])
+    print(request.data['response'])
+    # dumb = json.dump(request.data['response'])
+    res = json.loads(request.data['response'])
     print(res,'response id heeee')
 
     ord_id = ""
@@ -110,14 +113,16 @@ def handle_payment_success(request):
     raz_signature = ""
 
     # res.keys() will give us list of keys in res
-    for key in res.keys():
-        if key == 'razorpay_order_id':
-            ord_id = res[key]
-        elif key == 'razorpay_payment_id':
-            raz_pay_id = res[key]
-        elif key == 'razorpay_signature':
-            raz_signature = res[key]
-    
+    # for key in res.keys():
+    #     if key == 'razorpay_order_id':
+    #         ord_id = res[key]
+    #     elif key == 'razorpay_payment_id':
+    #         raz_pay_id = res[key]
+    #     elif key == 'razorpay_signature':
+    #         raz_signature = res[key]
+    ord_id=res['razorpay_order_id']
+    raz_pay_id = res['razorpay_payment_id']
+    raz_signature=res['razorpay_signature']
     # get order by payment_id which we've created earlier with isPaid=False
     order = Rent.objects.get(order_number=ord_id)
     # we will pass this whole data in razorpay client to verify the payment
@@ -127,7 +132,8 @@ def handle_payment_success(request):
         'razorpay_signature': raz_signature
     }
 
-    client = razorpay.Client(auth=(settings.RAZORPAY_ID,settings.RAZORPAY_KEY))
+    # client = razorpay.Client(auth=(settings.RAZORPAY_ID,settings.RAZORPAY_KEY))
+    client = razorpay.Client(auth=('rzp_test_TxQpeoYAlaoExd','oZT8rkCHhQIVafkP24miJhkQ'))
 
     # checking if the transaction is valid or not by passing above data dictionary in 
     # razorpay client if it is "valid" then check will return None
@@ -138,4 +144,6 @@ def handle_payment_success(request):
     
     reservation = Cars_Reservation.objects.get(id = reservation_id)
     reservation.is_payed = True
+    order.is_ordered = True
+    order.save()
     reservation.save()

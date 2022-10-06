@@ -6,13 +6,20 @@ import '../../styles/Admin/SingleCarDetails.css'
 const SingleCarExtentedDetails = () => {
     const {slug} = useParams()
     const [car, setCar] = useState({})
+    const [carDoc,setCarDoc]= useState({})
+    const API_URL = process.env.REACT_APP_API_URL
     useEffect(() => {
       axiosService.getSingleCar(slug)
       .then((res)=>{
         setCar(res.data)
+        axiosService.getCarDoc(res.data.id)
+        .then((response)=>{
+            setCarDoc(response.data)
       })
+      })
+      
     }, [slug])
-    
+    console.log('carddoc',carDoc);
     console.log("Slug:",slug);
     console.log("car:",car);
   return (
@@ -30,7 +37,7 @@ const SingleCarExtentedDetails = () => {
                     <div class="col-lg-7 col-md-7 col-sm-6">
                         <h4 class="box-title mt-5">Product description</h4>
                         <p>{car.description}</p>
-                        <button className='btn btn-primary' >Download Documents</button>
+                        <a href={API_URL+carDoc.document} className='btn btn-primary' >Download Documents</a>
                     </div>
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <h3 class="box-title mt-5">General Info</h3>

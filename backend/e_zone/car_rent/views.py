@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from rest_framework.response import Response
@@ -906,6 +907,13 @@ class CarDocumentViewSet(viewsets.ModelViewSet):
     queryset = CarsDocument.objects.all()
 
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        car_id = self.request.data.get("car_id")
+        vendor = Vendor.objects.get(owner=self.request.user)
+        car = Cars.objects.get(id=car_id)
+        serializer.save(owner=self.request.user,vendor_id=vendor,cars=car)
 
-
+    def retrieve(self, request, pk=None):
+        queryset = CarsDocument.objects.all()
+        doc = get_object_or_404(queryset,cars=pk)
+        serializer = CarDocumetSerializer(doc)
+        return Response(serializer.data)

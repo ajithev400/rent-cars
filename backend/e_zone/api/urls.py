@@ -4,7 +4,7 @@ from rest_framework.routers import DefaultRouter
 from car_rent.views import CarDocumentViewSet
 from .views import BlacklistTokenUpdateView
 from users.views import getRoutes, MyTokenObtainPairView,RegisterView,Verify_otpView,RetriveUserView,ProfileViewSet,UserViewSet
-from store.views import VehicleViewSet
+from store.views import VehicleViewSet, approve_new_cars
 from vendor.views import VendorViewSet
 from order.views import OrderViewSet
 from car_rent import views
@@ -126,6 +126,7 @@ urlpatterns = [
     path("rent/update/<str:pk>/", views.carUpdateRent, name="car-update-rent"),
     path("reservation/payment/",start_payment, name = 'reservation-pay'),
     path("reservation/payment/success/",handle_payment_success, name="handle-payment-success"),
+    path("vehicle/admin/approve-car/",approve_new_cars, name='approve_new_cars')
     
 ]
 router = DefaultRouter()

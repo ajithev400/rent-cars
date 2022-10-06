@@ -160,6 +160,62 @@ const handlePaymentSuccess = (formData)=>{
     })
 }
 
+const addCar = (formData)=>{
+    return axios.post(API_URL+'/api/vehicle/',formData,{
+        headers:{
+            
+            "Content-Type": "multipart/form-data",
+            'Authorization':`Bearer ${token.access}`
+        }
+    })
+}
+
+const addCarDoc = (formData)=>{
+    return axios.post(API_URL+'/api/car-documents/',formData,{
+        headers:{
+            
+            "Content-Type": "multipart/form-data",
+            'Authorization':`Bearer ${token.access}`
+        }
+    })
+}
+
+const getAllUnApprovedCars = ()=>{
+    return axios.get(API_URL+'/api/vehicle/admin/approve-car/',{
+        headers:{
+            'Authorization':`Bearer ${token.access}`
+        }
+    })
+}
+
+const getSingleUnApprovedCar = (data)=>{
+    return axios.post(API_URL+'/api/vehicle/admin/approve-car/', data,{
+        headers:{
+            
+            "Content-Type": "application/json",
+            'Authorization':`Bearer ${token.access}`
+        }
+    })
+}
+
+const ApproveCar = (data)=>{
+    return axios.patch(API_URL+'/api/vehicle/admin/approve-car/', data,{
+        headers:{
+            'Authorization':`Bearer ${token.access}`,
+            'Content-Type':'application/json'
+        }
+    })
+}
+
+const getCarDoc = (data) =>{
+    return axios.get(API_URL+`/api/car-documents/${data}`,{
+        headers:{
+            'Authorization':`Bearer ${token.access}`,
+            'Content-Type':'application/json'
+        }
+    })
+}
+
 const axiosService = {
     getVehicles,
     getSingleCar,
@@ -178,6 +234,12 @@ const axiosService = {
     approveVendor,
     reservationPayment,
     handlePaymentSuccess,
+    addCar,
+    addCarDoc,
+    getAllUnApprovedCars,
+    ApproveCar,
+    getSingleUnApprovedCar,
+    getCarDoc,
 }
 
 export default axiosService

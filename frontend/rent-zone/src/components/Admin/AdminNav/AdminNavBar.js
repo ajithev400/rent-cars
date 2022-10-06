@@ -15,6 +15,7 @@ const AdminNavBar = () => {
                         <h5><strong>Dashboard</strong></h5>
                         <li><Link to={'/admin'}>Home</Link></li>
                         <li><Link to={'vehicles'}>Vehicles</Link></li>
+                        <li><Link to={'vehicles/new'}>Unverified VehicleList</Link></li>
                         <li><Link to={'user-list'}>Users</Link></li>
                         <li><Link to={'vendor-list'}>Vendors</Link></li>
                         {/* <li>Vehicle Status</li> */}

@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import axiosService from '../features/axios'
 import "../styles/Admin/AdminVehicleTable.css"
 
 const VehicleList = () => {
 
+    const navigate = useNavigate()
     const [carData, setCarData] = useState([])
     const [searchData,setSearchData] = useState('')
+    const handleClickOnItem =(slug)=>{
+        navigate(`/admin/vendor-car/${slug}`)
+    }
 
     useEffect(() => {
         axiosService.getVehicles(searchData)
@@ -18,8 +23,9 @@ const VehicleList = () => {
   return (
     <>
     <div>VehicleList</div>
-        <div class="table-wrapper">
-        <table class="fl-table">
+   
+        <div className="table-wrapper">
+        <table className="fl-table">
             <thead>
             <tr>
                 <th>Car Name</th>
@@ -31,7 +37,7 @@ const VehicleList = () => {
             </thead>
             {carData.map((item)=> (
 
-            <tr key={item.id}>
+            <tr key={item.id} onClick={()=>{handleClickOnItem(item.slug)}}>
                 <td>{item.name}</td>
                 <td>{item.creator}</td>
                 <td>{item.model}</td>

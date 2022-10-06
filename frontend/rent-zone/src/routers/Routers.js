@@ -24,6 +24,8 @@ import SingleCarExtentedDetails from '../pages/VendorDetails/SingleCarExtentedDe
 import Payment from '../pages/Payment'
 import CarAddingForm from '../pages/CarAddingForm'
 import Vendor from '../components/UI/Vendor'
+import UnApprovedCarList from '../components/Admin/UnApprovedCarList/UnApprovedCarList'
+import UnApprovedCarDetail from '../components/Admin/UnApprovedCarList/UnApprovedCarDetail'
 
 const Routers = () => {
   return (
@@ -49,10 +51,12 @@ const Routers = () => {
           <Route path ='admin' element = {<AdminPage/>}>
             <Route index element= {<OverallStatus/>} />
             <Route path ='vehicles' element= {<VehicleList/>} />
+            <Route path ='vehicles/new' element= {<UnApprovedCarList/>} />
             <Route path ='new-applications' element= {<VendorApplicationList/>} />
             <Route path ='vendor/:slug' element= {<VendorDetails/>} />
             <Route path ='vendor-list' element = {<VendorList/>} />
             <Route path = 'vendor-car/:slug' element = {<SingleCarExtentedDetails/>} />
+            <Route path='vendor-car/unverified/:slug' element = {<UnApprovedCarDetail/>} />
             <Route path ='user-list' element = {<UserList/>} />
           </Route>   
         </Route>

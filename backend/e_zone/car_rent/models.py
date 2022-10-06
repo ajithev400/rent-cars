@@ -39,7 +39,7 @@ class Cars(models.Model):
     
     name = models.CharField(max_length=150, blank=False, null = False)
     slug = models.SlugField(max_length=100,unique=True)  
-    code_registration = models.CharField(max_length=20,blank=True,null=True)
+    code_registration = models.CharField(max_length=20,blank=True,null=True,unique=True)
     documents = models.FileField(upload_to='vehicles/documents/',blank=True, null= True)
     main_location = models.ForeignKey(
         Locations, related_name="tracks", on_delete=models.SET_NULL, null=True
@@ -59,7 +59,7 @@ class Cars(models.Model):
     location = models.CharField(max_length=255, null=True, blank=True)
     to_the_location = models.CharField(max_length=255, null=True, blank=True)
     come_back = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
     is_available = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -73,9 +73,10 @@ class Cars(models.Model):
 class CarsDocument(models.Model):
     car_id = models.CharField(max_length=10)
     document = models.FileField(upload_to='vendor/vehicles/documents')
-    cars = models.ForeignKey(Cars,on_delete=models.CASCADE)
-    owner = models.ForeignKey(Account,on_delete=models.CASCADE)
-    vendor_id = models.ForeignKey(Vendor,on_delete=models.CASCADE)
+    registration_number = models.CharField(max_length=20,blank=True,null=True,unique=True)
+    cars = models.ForeignKey(Cars,on_delete=models.CASCADE,blank=True,null=True)
+    owner = models.ForeignKey(Account,on_delete=models.CASCADE,blank=True,null=True)
+    vendor_id = models.ForeignKey(Vendor,on_delete=models.CASCADE,blank=True,null=True)
 
 
 class Cars_ARC(models.Model):
