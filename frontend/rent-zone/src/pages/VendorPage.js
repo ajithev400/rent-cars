@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import axiosService from '../features/axios'
 import '../styles/vendor-dashboard.css'
 
@@ -7,6 +7,7 @@ const VendorPage = () => {
   const user = JSON.parse(localStorage.getItem('user'))
   const [profile, setProfile] = useState({})
   const [vendor, setVendor] = useState({})
+  const [reservedCars,setReservedCars] = useState([])
   const id = user.id
   const email = user.email
   useEffect(() => {
@@ -20,12 +21,25 @@ const VendorPage = () => {
     axiosService.searchVendor(email)
     .then((res)=>{
       setVendor(res.data.results[0])
+      axiosService.listReservedCarsByVendorId(res.data.results[0].id)
+      .then((response)=>{
+        console.log(response);
+        setReservedCars(response.data)
+      })
     })
+    
   }, [id,email])
+
+  const navigate = useNavigate()
+  const navigateToReservationDetails = (id)=>{   
+
+    navigate(`reservation/${id}`)
+  }
   
   console.log("Profile",profile);
   console.log("Vendor",vendor);
   console.log("User:",user);
+  console.log("ReservedCars",reservedCars);
   
   return (
     <>
@@ -45,8 +59,12 @@ const VendorPage = () => {
                         </div>
                         <div className="col-sm-6">
                             <div className="text-right ms-10">
-                                <button style={{"marginLeft":"100px",'marginTop':'40px'}} className="btn btn-light waves-effect">Add New Car</button>
-                                <Link to={'add-cars'} style={{"marginLeft":"100px",'marginTop':'40px'}} className="btn btn-light waves-effect">Edit Profile</Link>
+                                <Link to = {'edit-profile'} style={{"marginLeft":"100px",'marginTop':'40px'}} className="btn btn-light waves-effect">Edit Profile</Link>
+                                <Link to={'add-cars'} style={{"marginLeft":"100px",'marginTop':'40px'}} className="btn btn-light waves-effect">Add new Car</Link>
+                                <button onClick={()=>{
+                                    localStorage.clear()
+                                    
+                                }} style={{"marginLeft":"100px",'marginTop':'40px'}} className="btn btn-light waves-effect">LogOut</button>
 
                             </div>
                         </div>
@@ -77,84 +95,7 @@ const VendorPage = () => {
                         </ul>
                     </div>
                 </div>
-                {/* <!-- Personal-Information --> */}
-                <div className="card-box ribbon-box">
-                    <div className="ribbon ribbon-primary">Messages</div>
-                    <div className="clearfix"></div>
-                    <div className="inbox-widget">
-                        <a href="#!">
-                            <div className="inbox-item">
-                                <div className="inbox-item-img"><img src="https://bootdey.com/img/Content/avatar/avatar2.png" className="rounded-circle" alt=""/></div>
-                                <p className="inbox-item-author">Tomaslau</p>
-                                <p className="inbox-item-text">I've finished it! See you so...</p>
-                                <p className="inbox-item-date">
-                                    <button type="button" className="btn btn-icon btn-sm waves-effect waves-light btn-success">Reply</button>
-                                </p>
-                            </div>
-                        </a>
-                        <a href="#!">
-                            <div className="inbox-item">
-                                <div className="inbox-item-img"><img src="https://bootdey.com/img/Content/avatar/avatar3.png" className="rounded-circle" alt=""/></div>
-                                <p className="inbox-item-author">Stillnotdavid</p>
-                                <p className="inbox-item-text">This theme is awesome!</p>
-                                <p className="inbox-item-date">
-                                    <button type="button" className="btn btn-icon btn-sm waves-effect waves-light btn-success">Reply</button>
-                                </p>
-                            </div>
-                        </a>
-                        <a href="#!">
-                            <div className="inbox-item">
-                                <div className="inbox-item-img"><img src="https://bootdey.com/img/Content/avatar/avatar4.png" className="rounded-circle" alt=""/></div>
-                                <p className="inbox-item-author">Kurafire</p>
-                                <p className="inbox-item-text">Nice to meet you</p>
-                                <p className="inbox-item-date">
-                                    <button type="button" className="btn btn-icon btn-sm waves-effect waves-light btn-success">Reply</button>
-                                </p>
-                            </div>
-                        </a>
-                        <a href="#!">
-                            <div className="inbox-item">
-                                <div className="inbox-item-img"><img src="https://bootdey.com/img/Content/avatar/avatar5.png" className="rounded-circle" alt=""/></div>
-                                <p className="inbox-item-author">Shahedk</p>
-                                <p className="inbox-item-text">Hey! there I'm available...</p>
-                                <p className="inbox-item-date">
-                                    <button type="button" className="btn btn-icon btn-sm waves-effect waves-light btn-success">Reply</button>
-                                </p>
-                            </div>
-                        </a>
-                        <a href="#!">
-                            <div className="inbox-item">
-                                <div className="inbox-item-img"><img src="https://bootdey.com/img/Content/avatar/avatar6.png" className="rounded-circle" alt=""/></div>
-                                <p className="inbox-item-author">Adhamdannaway</p>
-                                <p className="inbox-item-text">This theme is awesome!</p>
-                                <p className="inbox-item-date">
-                                    <button type="button" className="btn btn-icon btn-sm waves-effect waves-light btn-success">Reply</button>
-                                </p>
-                            </div>
-                        </a>
-                        <a href="#!">
-                            <div className="inbox-item">
-                                <div className="inbox-item-img"><img src="https://bootdey.com/img/Content/avatar/avatar2.png" className="rounded-circle" alt=""/></div>
-                                <p className="inbox-item-author">Tomaslau</p>
-                                <p className="inbox-item-text">I've finished it! See you so...</p>
-                                <p className="inbox-item-date">
-                                    <button type="button" className="btn btn-icon btn-sm waves-effect waves-light btn-success">Reply</button>
-                                </p>
-                            </div>
-                        </a>
-                        <a href="#!">
-                            <div className="inbox-item">
-                                <div className="inbox-item-img"><img src="https://bootdey.com/img/Content/avatar/avatar3.png" className="rounded-circle" alt=""/></div>
-                                <p className="inbox-item-author">Stillnotdavid</p>
-                                <p className="inbox-item-text">This theme is awesome!</p>
-                                <p className="inbox-item-date">
-                                    <button type="button" className="btn btn-icon btn-sm waves-effect waves-light btn-success">Reply</button>
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
+                           </div>
             <div className="col-xl-8">
                 <div className="row">
                     <div className="col-sm-4">
@@ -169,11 +110,11 @@ const VendorPage = () => {
                             <h2 className="text-success">$<span>46,782</span></h2><span className="badge badge-danger">-29% </span><span className="text-muted">From previous period</span></div>
                     </div>
                     {/* <!-- end col --> */}
-                    <div className="col-sm-4">
+                    {/* <div className="col-sm-4">
                         <div className="card-box tilebox-one"><i className="icon-rocket float-right text-muted"></i>
                             <h6 className="text-muted text-uppercase mt-0">Product Sold</h6>
                             <h2 className="text-success">1,890</h2><span className="badge badge-custom">+89% </span><span className="text-muted">Last year</span></div>
-                    </div>
+                    </div> */}
                     {/* <!-- end col --> */}
                 </div>
                 {/* <!-- end row --> */}
@@ -196,60 +137,40 @@ const VendorPage = () => {
                     </div>
                 </div> */}
                 <div className="card-box">
-                    <h4 className="header-title mb-3">My Cars</h4>
+                    <h4 className="header-title mb-3">New Car Reservations</h4>
                     <div className="table-responsive">
                         <table className="table">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Project Name</th>
+                                    <th>Id</th>
+                                    <th>User Name</th>
+                                    <th>Reserved Car</th>
                                     <th>Start Date</th>
-                                    <th>Due Date</th>
+                                    <th>End Date</th>
                                     <th>Status</th>
-                                    <th>Assign</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Adminox Admin</td>
-                                    <td>01/01/2015</td>
-                                    <td>07/05/2015</td>
-                                    <td><span className="label label-info">Work in Progress</span></td>
-                                    <td>Coderthemes</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Adminox Frontend</td>
-                                    <td>01/01/2015</td>
-                                    <td>07/05/2015</td>
-                                    <td><span className="label label-success">Pending</span></td>
-                                    <td>Coderthemes</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Adminox Admin</td>
-                                    <td>01/01/2015</td>
-                                    <td>07/05/2015</td>
-                                    <td><span className="label label-pink">Done</span></td>
-                                    <td>Coderthemes</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Adminox Frontend</td>
-                                    <td>01/01/2015</td>
-                                    <td>07/05/2015</td>
-                                    <td><span className="label label-purple">Work in Progress</span></td>
-                                    <td>Coderthemes</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Adminox Admin</td>
-                                    <td>01/01/2015</td>
-                                    <td>07/05/2015</td>
-                                    <td><span className="label label-warning">Coming soon</span></td>
-                                    <td>Coderthemes</td>
-                                </tr>
+                                {
+                                    reservedCars.map((item)=>{
+                                    return(
+                                    <tr key={item.id} onClick={()=>{
+                                        navigateToReservationDetails(item.id)
+                                    }}>
+                                        <td>{item.id}</td>
+                                        <td>{item.client_name}</td>
+                                        <td>{item.id_cars.name}</td>
+                                        <td>{item.date_from.slice(0,10)}</td>
+                                        <td>{item.date_to.slice(0,10)}</td>
+                                        <td>{item.status}</td>
+                                        {/* <td><span className="label label-info">Work in Progress</span></td> */}
+                                        {/* <td>Coderthemes</td> */}
+                                    </tr>
+                                    )
+                                    })
+                                }
+                                
+
                             </tbody>
                         </table>
                     </div>

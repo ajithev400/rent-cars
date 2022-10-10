@@ -123,7 +123,7 @@ const Header = () => {
                 </span>
                 <div className="header__location-content">
                   <h4>Bangalore</h4>
-                  <h6>HSR, Bangalore</h6>
+                  <h6>Bangalore</h6>
                 </div>
               </div>
             </Col>

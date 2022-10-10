@@ -431,6 +431,8 @@ def createReservationCar(request):
             return Response("included date range for the lease")
 
     try:
+        queryset = Vendor.objects.all()
+        vendor = get_object_or_404(queryset,id=data["creator"])
         car_reservation = Cars_Reservation.objects.create(
             id_cars=obj_car,
             client_name=data["name"],
@@ -444,6 +446,7 @@ def createReservationCar(request):
             note=data["note"],
             location=obj_location,
             creator=data["creator"],
+            owner=vendor,
         )
 
         data  = {
@@ -471,6 +474,18 @@ def listReservationCar(request, pk, loc):
     carListReservationGroupBy = carListReservation.order_by("date_from")
     serializer = CarsReservationSerializer(carListReservationGroupBy, many=True)
     return Response(serializer.data)
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def listReservationCarsOfVendor(request,pk):
+    print('id:',pk)
+    queryset = Vendor.objects.all()
+    vendor = get_object_or_404(queryset,id=pk)
+    reservations = Cars_Reservation.objects.filter(owner=vendor)
+    print("Reservation:",reservations)
+    serializer = CarsReservationSerializer(reservations,many=True)
+    return Response(serializer.data,status=status.HTTP_200_OK)
+
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])

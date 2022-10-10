@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axiosService from '../../../features/axios'
-import UnApprovedCarDetail from './UnApprovedCarDetail'
+// import UnApprovedCarDetail from './UnApprovedCarDetail'
 
 const UnApprovedCarList = () => {
   const [carData, setCarData] = useState([])

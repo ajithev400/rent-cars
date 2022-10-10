@@ -16,8 +16,13 @@ const ReservationForm = ({singleCar}) => {
     const miliSec = date.getTime()
     var hr = date.getHours()
     var min = date.getMinutes()
-    var sec = date.getSeconds()    
+    var sec = date.getSeconds()  
+    var year = date.getFullYear()
+    var mon = date.getMonth()
+    var day = date.getDate()  
     const currentTime = hr +":"+min+":"+sec
+    const currentDate = year+"-"+mon+"-"+day +" "+ currentTime
+    console.log("Current Date",currentDate);
     const [razorpay, setRazorpay] = useState(false)
     const [formData, setFormData] = useState({
         name:userdata.first_name,
@@ -64,8 +69,11 @@ const ReservationForm = ({singleCar}) => {
         e.preventDefault();
         if(!razorpay){
             toast.error('choose a payment method')
+        }else if(formData.dateFrom>formData.dateTo){
+            toast.error('You choose a wrong date...!')
+        }else if(formData.dateFrom>=currentDate){
+            toast.error('Date From is Wrong')
         }else{
-
             axiosService.createCarReservation(formData)
             .then((res)=>{
                 

@@ -26,6 +26,8 @@ import CarAddingForm from '../pages/CarAddingForm'
 import Vendor from '../components/UI/Vendor'
 import UnApprovedCarList from '../components/Admin/UnApprovedCarList/UnApprovedCarList'
 import UnApprovedCarDetail from '../components/Admin/UnApprovedCarList/UnApprovedCarDetail'
+import VendorProfileEdit from '../pages/VendorDetails/VendorProfileEdit'
+import ReservationDetailsForVendor from '../pages/ReservationDetailsForVendor'
 
 const Routers = () => {
   return (
@@ -46,6 +48,8 @@ const Routers = () => {
           <Route path ='vendor-dashboard' element = {<Vendor/>}>
             <Route index element={<VendorPage/>} />
             <Route path='add-cars' element= {<CarAddingForm/>} />
+            <Route path='edit-profile' element={<VendorProfileEdit/>} />
+            <Route path='reservation/:slug' element={<ReservationDetailsForVendor/>}/>
             
             </Route>   
           <Route path ='admin' element = {<AdminPage/>}>

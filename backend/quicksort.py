@@ -22,3 +22,9 @@ def quicksort(l,r,nums):
 arr = [11,2,3,7,41,23,9]
 res = quicksort(0,len(arr)-1,arr)
 print(res)
+
+# def foo(number):
+    
+#     print(str(number))
+
+# foo(1)

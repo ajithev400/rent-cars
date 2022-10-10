@@ -2,9 +2,9 @@ import axios from 'axios'
 const API_URL = process.env.REACT_APP_API_URL
 const token = JSON.parse(localStorage.getItem('jwtToken'))
 
-const instance = axios.create({
-    baseURL:API_URL
-})
+// const instance = axios.create({
+//     baseURL:API_URL
+// })
 
 const getVehicles = (data) =>{ return axios.get(API_URL+`/api/vehicle/?search=${data}`)
     .catch((res)=>{
@@ -89,6 +89,11 @@ const findCars = (formData) =>{
         }
     })
 }
+
+const vehiclePagination =(number)=>{
+    return axios.get(API_URL+`/api/vehicle/?page=${number}`)
+}
+
 const getUserProfile = (pk)=>{
     return axios.get(API_URL+`/api/profile/${pk}/`,{
         headers:{
@@ -216,6 +221,31 @@ const getCarDoc = (data) =>{
     })
 }
 
+const listReservedCarsByVendorId = (data) =>{
+    return axios.get(API_URL+`/api/filter/reservation/vendor/${data}`,{
+        headers:{
+            'Authorization':`Bearer ${token.access}`,
+        }
+    })
+}
+
+const getReservationDataById = (data)=>{
+    return axios.get(API_URL+`/api/car/single/reservation/${data}/`,{
+        headers:{
+            'Authorization':`Bearer ${token.access}`,
+        }
+    })
+}
+
+const editProfileById = (formData,id)=>{
+    return axios.patch(API_URL+`/api/profile/${id}/`,formData,{
+        headers:{          
+            "Content-Type": "multipart/form-data",
+            'Authorization':`Bearer ${token.access}`
+        }
+    })
+}
+
 const axiosService = {
     getVehicles,
     getSingleCar,
@@ -240,6 +270,10 @@ const axiosService = {
     ApproveCar,
     getSingleUnApprovedCar,
     getCarDoc,
+    listReservedCarsByVendorId,
+    getReservationDataById,
+    editProfileById,
+    vehiclePagination,
 }
 
 export default axiosService

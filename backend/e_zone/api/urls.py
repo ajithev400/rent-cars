@@ -83,6 +83,7 @@ urlpatterns = [
     path(
         "filter/reservation/", views.filterReservations, name="filter-reservations"
     ),
+    path("filter/reservation/vendor/<str:pk>",views.listReservationCarsOfVendor,name="filter-reservation-vendor"),
     path(
         "reservation/car/create/",
         views.createReservationCar,

@@ -1,5 +1,6 @@
 from dataclasses import fields
 from rest_framework import serializers
+from users.serializers import UserSerializer
 from .models import *
 from django.utils import timezone
 
@@ -80,7 +81,7 @@ class CarsReservationSerializer(serializers.ModelSerializer):
 
     id_cars = CarsSerializer(many=False)
     location = LocationsSerializer(many=False)
-
+    client = UserSerializer(many=False)
     class Meta:
         model = Cars_Reservation
         fields = [
@@ -92,6 +93,7 @@ class CarsReservationSerializer(serializers.ModelSerializer):
             "client_document_identification",
             "client_phone",
             "client_email",
+            "client",
             "date_from",
             "start_year",
             "start_month",
